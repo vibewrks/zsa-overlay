@@ -25,7 +25,7 @@ enum MoonlanderOverlayApp {
 
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    private static let instanceNotification = Notification.Name("com.kpostigo.MoonlanderOverlay.toggle")
+    private static let instanceNotification = Notification.Name("com.vibewrks.MoonlanderOverlay.toggle")
 
     private let controller = OverlayController()
     private var statusItem: NSStatusItem?
@@ -66,7 +66,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// A second launch should surface the running overlay rather than start a second helper.
     private func handOffToRunningInstance() -> Bool {
-        let bundleID = Bundle.main.bundleIdentifier ?? "com.kpostigo.MoonlanderOverlay"
+        let bundleID = Bundle.main.bundleIdentifier ?? "com.vibewrks.MoonlanderOverlay"
         let current = ProcessInfo.processInfo.processIdentifier
         let others = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID)
             .filter { $0.processIdentifier != current }
