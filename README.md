@@ -16,7 +16,7 @@ the real overlay is transparent and floats above other windows.*
 ## Quick start
 
 ```sh
-cd ~/dev/apps/moonlander-overlay
+cd ~/dev/apps/zsa-overlay
 ./scripts/setup.sh          # first run: checks tools, imports YOUR layout, builds
 open "build/Moonlander Overlay.app"
 ```
@@ -91,7 +91,7 @@ for newer revisions.
 4. Read the board's revision and import that explicit revision:
 
    ```sh
-   cd ~/dev/apps/moonlander-overlay
+   cd ~/dev/apps/zsa-overlay
    "build/Moonlander Overlay.app/Contents/MacOS/MoonlanderOverlay" --print-identity
    # Example output: GMrOw/rba3al
 
