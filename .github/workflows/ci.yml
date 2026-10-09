@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# One run per ref; newer pushes cancel stale PR runs so minutes aren't wasted.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build-and-test:
+    # Blacksmith M4 macOS runner; image tracks GitHub's macOS 26 image
+    # (Xcode 26 + Swift toolchain + Rust preinstalled). Swap back to
+    # `macos-26` if Blacksmith access lapses.
+    runs-on: blacksmith-6vcpu-macos-26
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Select Xcode 26 if present
+        run: |
+          if [ -d /Applications/Xcode_26.app ]; then
+            sudo xcode-select -s /Applications/Xcode_26.app
+          fi
+          swift --version
+          xcodebuild -version
+
+      - name: Cache Cargo dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: Sidecar
+
+      - name: Swift tests
+        run: swift test
+
+      - name: Rust tests
+        run: cargo test --manifest-path Sidecar/Cargo.toml
+
+      - name: Build app bundle
+        run: ./scripts/build-app.sh
+
+      - name: Verify signature
+        run: codesign --verify --deep --strict "build/Moonlander Overlay.app"
