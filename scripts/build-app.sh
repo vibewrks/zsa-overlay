@@ -47,7 +47,7 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
 	<key>CFBundleDisplayName</key>
 	<string>Moonlander Overlay</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.kpostigo.MoonlanderOverlay</string>
+	<string>com.vibewrks.MoonlanderOverlay</string>
 	<key>CFBundleExecutable</key>
 	<string>MoonlanderOverlay</string>
 	<key>CFBundlePackageType</key>

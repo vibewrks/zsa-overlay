@@ -17,9 +17,11 @@ the real overlay is transparent and floats above other windows.*
 
 ```sh
 cd ~/dev/apps/moonlander-overlay
-./scripts/build-app.sh
+./scripts/setup.sh          # first run: checks tools, imports YOUR layout, builds
 open "build/Moonlander Overlay.app"
 ```
+
+Already set up and just rebuilding? `./scripts/build-app.sh` is enough.
 
 Disconnect the board in Keymapp or quit Keymapp before enabling **Follow Keyboard**.
 With the tested HID backend, only one process can own the board's raw-HID interface.
@@ -238,3 +240,8 @@ Native held/released keycap surfaces were also rendered and inspected.
 Git commit **`c96521a`** records the working Keymapp-API version before this cutover, including
 its dependencies, layout data and build script. Build artifacts are excluded from Git and
 recreated by the script. The current version uses direct HID only; there is no API fallback.
+
+## License
+
+MIT — see [LICENSE](LICENSE). You may use, fork, and sell builds of this software;
+the license notice must ship with substantial copies.
