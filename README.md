@@ -47,6 +47,19 @@ The direct raw-HID interface did not require Input Monitoring or Accessibility p
 on the tested Mac. Global-hotkey registration also does not require Accessibility permission.
 There is no gRPC client, Unix socket, or `protoc` build requirement anymore.
 
+## Supported hardware
+
+- **Moonlander Mark I** only: 72 keys, USB IDs `3297:1969`, Oryx raw-HID interface
+  (usage page `0xff60`, usage `0x61`), **protocol version 5**.
+- One board at a time; multiple connected Moonlanders are refused rather than guessed.
+- Not supported (yet): Voyager, Ergodox EZ, Planck EZ, or any non-ZSA board. The
+  board-specific pieces (`MoonlanderMatrix`, the 72-key validation, the HID interface
+  IDs) are deliberately isolated so a second board can be added side by side.
+
+The repo is named `zsa-overlay` for where this is going; the app stays
+**Moonlander Overlay** because that is what it supports today. It earns the broader
+name when a second board lands.
+
 ## Controls
 
 | Action | Control |
