@@ -7,6 +7,12 @@ active layer and physical key presses directly over HID.
 **Keymapp and its API are not runtime dependencies.** Keymapp is used occasionally to sync
 layout data from Oryx into its local cache. The overlay never flashes firmware.
 
+![Moonlander Overlay showing the qwerty layer with F and J held](docs/overlay.png)
+
+*Layer 0 (qwerty) with live held-key highlights on F and J. Rendered offscreen by the
+same `KeyboardView` drawing code the app uses, on a dark backdrop for legibility —
+the real overlay is transparent and floats above other windows.*
+
 ## Quick start
 
 ```sh
