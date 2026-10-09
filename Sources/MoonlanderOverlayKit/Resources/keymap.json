@@ -1,0 +1,3888 @@
+{
+  "title": "learning dvorak",
+  "revision": "rba3al",
+  "keys": [
+    {
+      "id": 0,
+      "x": 0.0,
+      "y": 0.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 1,
+      "x": 1.0,
+      "y": 0.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 2,
+      "x": 2.0,
+      "y": 0.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 3,
+      "x": 3.0,
+      "y": 0.0,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 4,
+      "x": 4.0,
+      "y": 0.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 5,
+      "x": 5.0,
+      "y": 0.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 6,
+      "x": 6.0,
+      "y": 0.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 7,
+      "x": 0.0,
+      "y": 1.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 8,
+      "x": 1.0,
+      "y": 1.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 9,
+      "x": 2.0,
+      "y": 1.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 10,
+      "x": 3.0,
+      "y": 1.0,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 11,
+      "x": 4.0,
+      "y": 1.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 12,
+      "x": 5.0,
+      "y": 1.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 13,
+      "x": 6.0,
+      "y": 1.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 14,
+      "x": 0.0,
+      "y": 2.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 15,
+      "x": 1.0,
+      "y": 2.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 16,
+      "x": 2.0,
+      "y": 2.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 17,
+      "x": 3.0,
+      "y": 2.0,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 18,
+      "x": 4.0,
+      "y": 2.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 19,
+      "x": 5.0,
+      "y": 2.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 20,
+      "x": 6.0,
+      "y": 2.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 21,
+      "x": 0.0,
+      "y": 3.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 22,
+      "x": 1.0,
+      "y": 3.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 23,
+      "x": 2.0,
+      "y": 3.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 24,
+      "x": 3.0,
+      "y": 3.0,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 25,
+      "x": 4.0,
+      "y": 3.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 26,
+      "x": 5.0,
+      "y": 3.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 27,
+      "x": 0.0,
+      "y": 4.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 28,
+      "x": 1.0,
+      "y": 4.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 29,
+      "x": 2.0,
+      "y": 4.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 30,
+      "x": 3.0,
+      "y": 4.0,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 31,
+      "x": 4.0,
+      "y": 4.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 32,
+      "x": 5.0,
+      "y": 4.5,
+      "width": 2.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 33,
+      "x": 5.0,
+      "y": 5.5,
+      "width": 1.0,
+      "height": 1.5,
+      "rotation": 0.0
+    },
+    {
+      "id": 34,
+      "x": 6.0,
+      "y": 5.5,
+      "width": 1.0,
+      "height": 1.5,
+      "rotation": 0.0
+    },
+    {
+      "id": 35,
+      "x": 7.0,
+      "y": 5.5,
+      "width": 1.0,
+      "height": 1.5,
+      "rotation": 0.0
+    },
+    {
+      "id": 36,
+      "x": 10.0,
+      "y": 0.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 37,
+      "x": 11.0,
+      "y": 0.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 38,
+      "x": 12.0,
+      "y": 0.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 39,
+      "x": 13.0,
+      "y": 0.0,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 40,
+      "x": 14.0,
+      "y": 0.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 41,
+      "x": 15.0,
+      "y": 0.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 42,
+      "x": 16.0,
+      "y": 0.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 43,
+      "x": 10.0,
+      "y": 1.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 44,
+      "x": 11.0,
+      "y": 1.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 45,
+      "x": 12.0,
+      "y": 1.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 46,
+      "x": 13.0,
+      "y": 1.0,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 47,
+      "x": 14.0,
+      "y": 1.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 48,
+      "x": 15.0,
+      "y": 1.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 49,
+      "x": 16.0,
+      "y": 1.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 50,
+      "x": 10.0,
+      "y": 2.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 51,
+      "x": 11.0,
+      "y": 2.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 52,
+      "x": 12.0,
+      "y": 2.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 53,
+      "x": 13.0,
+      "y": 2.0,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 54,
+      "x": 14.0,
+      "y": 2.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 55,
+      "x": 15.0,
+      "y": 2.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 56,
+      "x": 16.0,
+      "y": 2.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 57,
+      "x": 11.0,
+      "y": 3.25,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 58,
+      "x": 12.0,
+      "y": 3.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 59,
+      "x": 13.0,
+      "y": 3.0,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 60,
+      "x": 14.0,
+      "y": 3.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 61,
+      "x": 15.0,
+      "y": 3.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 62,
+      "x": 16.0,
+      "y": 3.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 63,
+      "x": 12.0,
+      "y": 4.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 64,
+      "x": 13.0,
+      "y": 4.0,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 65,
+      "x": 14.0,
+      "y": 4.125,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 66,
+      "x": 15.0,
+      "y": 4.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 67,
+      "x": 16.0,
+      "y": 4.375,
+      "width": 1.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 68,
+      "x": 10.0,
+      "y": 4.5,
+      "width": 2.0,
+      "height": 1.0,
+      "rotation": 0.0
+    },
+    {
+      "id": 69,
+      "x": 9.0,
+      "y": 5.5,
+      "width": 1.0,
+      "height": 1.5,
+      "rotation": 0.0
+    },
+    {
+      "id": 70,
+      "x": 10.0,
+      "y": 5.5,
+      "width": 1.0,
+      "height": 1.5,
+      "rotation": 0.0
+    },
+    {
+      "id": 71,
+      "x": 11.0,
+      "y": 5.5,
+      "width": 1.0,
+      "height": 1.5,
+      "rotation": 0.0
+    }
+  ],
+  "layers": [
+    {
+      "index": 0,
+      "title": "qwerty",
+      "bindings": [
+        {
+          "kind": "mapped",
+          "tap": "Esc",
+          "hold": "",
+          "extra": "",
+          "color": "#FF0000"
+        },
+        {
+          "kind": "mapped",
+          "tap": "1 !",
+          "hold": "",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "2 @",
+          "hold": "",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "3 #",
+          "hold": "",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "4 $",
+          "hold": "",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "5 %",
+          "hold": "",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "` ~",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Q",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "W",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "E",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "R",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "T",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "\\ |",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⇥",
+          "hold": "Caps",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "A",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "S",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "D",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "F",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "G",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "[ {",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "L⇧",
+          "hold": "",
+          "extra": "",
+          "color": "#00F0FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Z",
+          "hold": "L⌃",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "X",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "C",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "V",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "B",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⌃S",
+          "hold": "L⌃",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "L⌥",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "L⌘",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "⌫",
+          "hold": "",
+          "extra": "",
+          "color": "#FF0000"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Prev",
+          "hold": "⌃⌘Q",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⇥",
+          "hold": "L⌘",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Space",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO command",
+          "hold": "MO media",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Dictation",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "6 ^",
+          "hold": "",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "7 &",
+          "hold": "",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "8 *",
+          "hold": "",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "9 (",
+          "hold": "",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "0 )",
+          "hold": "",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⇧ 📸",
+          "hold": "",
+          "extra": "⇧⌘4",
+          "color": "#00F0FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "= +",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Y",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "U",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "I",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "O",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "P",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "- _",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "] }",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "H",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "J",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "K",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "L",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "; :",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "' \"",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "N",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "M",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": ", :",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": ". >",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "/ ?",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "R⇧",
+          "hold": "",
+          "extra": "",
+          "color": "#00F0FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Space",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "←",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "↓",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "↑",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "→",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Next",
+          "hold": "Play",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO cs2",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⌘⇥",
+          "hold": "MO numpad",
+          "extra": "TO numpad",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⏎",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "title": "command",
+      "bindings": [
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Bootloader",
+          "hold": "",
+          "extra": "",
+          "color": "#FF0000"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO numpad",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO qwerty",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO dvorak",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO media",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO mouse",
+          "hold": "",
+          "extra": "",
+          "color": "#FF0000"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO cs2",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFB7F"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Dictation",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Indicator toggle",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "title": "media",
+      "bindings": [
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Brightness down",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Brightness up",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Prev",
+          "hold": "",
+          "extra": "",
+          "color": "#1EA2CE"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Play",
+          "hold": "",
+          "extra": "",
+          "color": "#CCC51D"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Next",
+          "hold": "",
+          "extra": "",
+          "color": "#1EA2CE"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Volume down",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Volume up",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Brightness -",
+          "hold": "",
+          "extra": "",
+          "color": "#CCC51D"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Saturation -",
+          "hold": "",
+          "extra": "",
+          "color": "#1D44CC"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO qwerty",
+          "hold": "",
+          "extra": "TO command",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Saturation +",
+          "hold": "",
+          "extra": "",
+          "color": "#1D44CC"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Brightness +",
+          "hold": "",
+          "extra": "",
+          "color": "#CCC51D"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "title": "mouse",
+      "bindings": [
+        {
+          "kind": "mapped",
+          "tap": "Audio toggle",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Music toggle",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Move up",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Music next",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Move left",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Move down",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Move right",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO command",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "⌃Wheel Up",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Wheel Down",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Wheel Up",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "⌃Wheel Down",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Left click",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Right click",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Play",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Prev",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Next",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Volume up",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Volume down",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Mute",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Brightness down",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Brightness up",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO command",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "WWW Back",
+          "hold": "",
+          "extra": ""
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "title": "numpad",
+      "bindings": [
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "(",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "mapped",
+          "tap": ")",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "=",
+          "hold": "",
+          "extra": "",
+          "color": "#FF0000"
+        },
+        {
+          "kind": "mapped",
+          "tap": "/",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "mapped",
+          "tap": "*",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "7",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "8",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "9",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "+",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "%",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "4",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "5",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "6",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "-",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "$",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "1",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "2",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "3",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": ",",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "mapped",
+          "tap": "0",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": ".",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⏎",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO qwerty",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "title": "cs2",
+      "bindings": [
+        {
+          "kind": "mapped",
+          "tap": "Esc",
+          "hold": "",
+          "extra": "",
+          "color": "#FF0000"
+        },
+        {
+          "kind": "mapped",
+          "tap": "1",
+          "hold": "F1",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "2",
+          "hold": "F2",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "3",
+          "hold": "F3",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "4",
+          "hold": "F4",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "5",
+          "hold": "F5",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "`",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "H",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Q",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "W",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "E",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "R",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "T",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "L⌃",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "mapped",
+          "tap": "A",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "S",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "D",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "F",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "G",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "B",
+          "hold": "",
+          "extra": "",
+          "color": "#5FF49C"
+        },
+        {
+          "kind": "mapped",
+          "tap": "L⇧",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Z",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "X",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "C",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "V",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "L⌃",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "X",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Space",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⇥",
+          "hold": "",
+          "extra": "",
+          "color": "#1EA2CE"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⇥",
+          "hold": "",
+          "extra": "",
+          "color": "#1EA2CE"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⌥⇥",
+          "hold": "",
+          "extra": "",
+          "color": "#FF0000"
+        },
+        {
+          "kind": "mapped",
+          "tap": "L⌥",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "F6",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "mapped",
+          "tap": "F7",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "mapped",
+          "tap": "F8",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "mapped",
+          "tap": "F9",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "mapped",
+          "tap": "F10",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "mapped",
+          "tap": "F11",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "7",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "8",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "9",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "*",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "F12",
+          "hold": "",
+          "extra": "",
+          "color": "#FFFCB2"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "4",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "5",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "6",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "+",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "1",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "2",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "3",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "\\",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": ".",
+          "hold": "",
+          "extra": "",
+          "color": "#4DD3FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "0",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "=",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO qwerty",
+          "hold": "",
+          "extra": "",
+          "color": "#5200CF"
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "disabled",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "title": "dvorak",
+      "bindings": [
+        {
+          "kind": "mapped",
+          "tap": "`",
+          "hold": "",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "mapped",
+          "tap": "1",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "2",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "3",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "4",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "5",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "Caps",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": ";",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": ",",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": ".",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "P",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Y",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "'",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⇥",
+          "hold": "",
+          "extra": "",
+          "color": "#00F0FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "A",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "O",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "E",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "U",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "I",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "F11",
+          "hold": "",
+          "extra": "",
+          "color": "#1D44CC"
+        },
+        {
+          "kind": "mapped",
+          "tap": "",
+          "hold": "L⇧",
+          "extra": "",
+          "color": "#5E1DCC"
+        },
+        {
+          "kind": "mapped",
+          "tap": "'",
+          "hold": "L⌃",
+          "extra": "",
+          "color": "#FF00E5"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Q",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "J",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "K",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "X",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": "",
+          "color": "#FFB900"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "←",
+          "hold": "",
+          "extra": "",
+          "color": "#6100FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "→",
+          "hold": "",
+          "extra": "",
+          "color": "#6100FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "L⇧",
+          "hold": "",
+          "extra": "",
+          "color": "#5E1DCC"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⌫",
+          "hold": "",
+          "extra": "",
+          "color": "#F50909"
+        },
+        {
+          "kind": "mapped",
+          "tap": "L⌘",
+          "hold": "",
+          "extra": "",
+          "color": "#42FF00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "L⌘",
+          "hold": "",
+          "extra": "",
+          "color": "#42FF00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "\\",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "6",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "7",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "8",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "9",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "0",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "-",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "PgUp",
+          "hold": "",
+          "extra": "",
+          "color": "#1EA2CE"
+        },
+        {
+          "kind": "mapped",
+          "tap": "F",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "G",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "C",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "R",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "L",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "=",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "PgDn",
+          "hold": "",
+          "extra": "",
+          "color": "#1EA2CE"
+        },
+        {
+          "kind": "mapped",
+          "tap": "D",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "H",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "T",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "N",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "S",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "/",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "B",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "M",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "W",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "V",
+          "hold": "",
+          "extra": "",
+          "color": "#37CE00"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Z",
+          "hold": "R⌃",
+          "extra": "",
+          "color": "#FF00E5"
+        },
+        {
+          "kind": "transparent",
+          "tap": "",
+          "hold": "",
+          "extra": ""
+        },
+        {
+          "kind": "mapped",
+          "tap": "↓",
+          "hold": "",
+          "extra": "",
+          "color": "#6100FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "↑",
+          "hold": "",
+          "extra": "",
+          "color": "#6100FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "[",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "]",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Dictation",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Esc",
+          "hold": "",
+          "extra": "",
+          "color": "#D20404"
+        },
+        {
+          "kind": "mapped",
+          "tap": "TO command",
+          "hold": "",
+          "extra": "TO qwerty",
+          "color": "#FF008A"
+        },
+        {
+          "kind": "mapped",
+          "tap": "⏎",
+          "hold": "",
+          "extra": "",
+          "color": "#0075FF"
+        },
+        {
+          "kind": "mapped",
+          "tap": "Space",
+          "hold": "",
+          "extra": "",
+          "color": "#FFF500"
+        }
+      ]
+    }
+  ]
+}

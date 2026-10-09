@@ -1,0 +1,22 @@
+[package]
+name = "moonlander-layer-status"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.88"
+description = "Reports the Moonlander's active layer from the Keymapp API as JSON lines"
+publish = false
+
+[[bin]]
+name = "moonlander-layer-status"
+path = "src/main.rs"
+
+[dependencies]
+prost = "0.14"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal", "time"] }
+tonic = { version = "0.14", default-features = false, features = ["channel", "codegen"] }
+tonic-prost = "0.14"
+
+[build-dependencies]
+tonic-prost-build = "0.14"
