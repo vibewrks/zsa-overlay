@@ -1,205 +1,234 @@
 # Moonlander Overlay
 
-A macOS menu-bar app that draws the Moonlander's keycaps as a transparent, always-on-top
-overlay and follows the keyboard's active layer live. Built because Keymapp's own window is
-opaque and cannot be made transparent.
+A macOS menu-bar app that draws a wide, transparent Moonlander layout above other windows.
+A native Swift/AppKit panel renders the keycaps; a bundled Rust helper reads the board's
+active layer and physical key presses directly over HID.
 
-Two pieces:
-
-| Piece | Language | Responsibility |
-|---|---|---|
-| `Sources/` | Swift 6 / AppKit | Transparent window, keycap rendering, layers, geometry, IPC with the helper |
-| `Sidecar/` | Rust | Polls the Keymapp API over its Unix socket and prints one JSON status line per tick |
-
-The split exists because the Keymapp API is gRPC over a Unix domain socket. The Rust helper
-uses `tonic` with ZSA's protobuf contract; AppKit provides the native transparent panel.
-
----
+**Keymapp and its API are not runtime dependencies.** Keymapp is used occasionally to sync
+layout data from Oryx into its local cache. The overlay never flashes firmware.
 
 ## Quick start
 
 ```sh
 cd ~/dev/apps/moonlander-overlay
-./scripts/build-app.sh                  # builds Swift + Rust, assembles and ad-hoc signs the .app
-open "build/Moonlander Overlay.app"     # menu-bar only — no Dock icon
+./scripts/build-app.sh
+open "build/Moonlander Overlay.app"
 ```
 
-- **Toggle:** ⌃⌥K, or the menu-bar keyboard icon. **Hide:** Escape.
-- **Quit:** menu → Quit, or `pkill -f 'Contents/MacOS/MoonlanderOverlay'`.
-- **Tests:** `swift test`
+Disconnect the board in Keymapp or quit Keymapp before enabling **Follow Keyboard**.
+With the tested HID backend, only one process can own the board's raw-HID interface.
+The app has a keyboard icon in the menu bar, not a Dock icon.
+
+- Toggle visibility: **Control–Option–K**.
+- Quit: menu → **Quit**.
+- Hiding the overlay or selecting a manual layer releases the HID interface.
+- To use Keymapp without quitting the overlay: **Release Keyboard (Manual Reference)**,
+  then connect the board in Keymapp. After syncing, disconnect/quit Keymapp and select
+  **Follow Keyboard** again.
 
 ## Requirements
 
-- macOS 14 or later
-- Xcode command line tools (Swift 6.2+)
-- Rust toolchain (`cargo`)
-- `protoc` (`brew install protobuf`) — needed to rebuild the sidecar's gRPC bindings
-- Keymapp 1.3.7+ **running**, with **the API enabled** and **the keyboard connected**
+- macOS 14 or later.
+- Swift 6.2+ / Xcode command-line tools.
+- Rust and Cargo.
+- A connected Moonlander with compatible Oryx firmware: the helper currently supports
+  **Oryx HID protocol version 5**, verified on `GMrOw/rba3al`.
+- Python 3 for importing updated legends; Keymapp for populating its local layout cache.
 
-## Keymapp setup (read this first)
-
-1. **Use the direct-download build from [zsa.io/keymapp](https://www.zsa.io/keymapp), not the
-   Mac App Store build.** The App Store build is sandboxed, so its socket lives under
-   `~/Library/Containers/io.zsa.keymapp/Data/Library/Application Support/.keymapp/keymapp.sock`
-   — a path of `96 + <username length>` characters. macOS caps a Unix socket path at 103
-   characters (`sun_path` is 104 bytes including the NUL), so with a username of **8 or more
-   characters** the `bind()` fails and the API never starts. Keymapp reports:
-
-   ```
-   Failed to start API: listen unix /Users/<user>/Library/Containers/.../keymapp.sock: bind: invalid argument
-   ```
-
-   The direct-download build is not sandboxed; it uses
-   `~/Library/Application Support/.keymapp/keymapp.sock` (65 characters here) and works.
-2. In Keymapp's settings, **enable the API**.
-3. **Connect the keyboard in Keymapp.** With `startup_autoconnect` off it will not happen by
-   itself, and the API then reports `connected_keyboard: none` (the overlay shows
-   `⚠️ No keyboard connected`).
-4. Verify:
-
-   ```sh
-   ./Sidecar/target/release/moonlander-layer-status --once
-   # {"state":"connected","layer":0,"message":"","keyboard":"Moonlander MK1"}
-   ```
-
-The sidecar probes both socket paths, so either build works as long as the API actually binds.
+The direct raw-HID interface did not require Input Monitoring or Accessibility permission
+on the tested Mac. Global-hotkey registration also does not require Accessibility permission.
+There is no gRPC client, Unix socket, or `protoc` build requirement anymore.
 
 ## Controls
 
-| Action | How |
+| Action | Control |
 |---|---|
-| Show / hide | ⌃⌥K or menu → Show/Hide Overlay |
-| Hide (when visible) | Escape |
-| Follow the keyboard's layer | Menu → **Follow Keyboard** (default) |
-| Pin one layer | Menu → **Layer** ▸ pick a layer (works with Keymapp closed; remembered across launches) |
-| Never intercept clicks | Menu → **Pinned (click-through)** |
-| Resize | Drag any edge or corner; the bottom-right notch is the affordance. Or menu → Larger / Smaller |
-| Re-read `keymap.json` | Menu → Reload Layout |
-| Re-dial the helper | Menu → Retry Layer Status |
-| Find the layout file | Menu → Reveal Layout File |
+| Show/hide | Control–Option–K or the menu item |
+| Hide while the panel receives key events | Escape |
+| Follow live layer and highlight held keys | **Follow Keyboard** |
+| Release HID ownership without quitting | **Release Keyboard (Manual Reference)** |
+| Display one reference layer without reading the board | **Layer** submenu; selection is remembered |
+| Pass clicks to applications underneath | **Pinned (click-through)** |
+| Resize | Drag an edge/corner; bottom-right notch shows the affordance, or use **Larger/Smaller** |
+| Reconnect the HID helper | **Retry Keyboard Connection** |
+| Re-read legends and board identity | **Reload Layout** |
+| Locate the loaded legend file | **Reveal Layout File** |
 
-The notch is hidden in click-through mode, where no click can reach the window anyway.
-Minimum size is 420×150; the caps scale to whatever size the window is and drop to
-primary-only legends before they would collide.
+The grip disappears in click-through mode. Minimum panel size is 420×150. Keycaps fit the
+window without changing their aspect ratio; secondary legends disappear at small sizes.
+Disabled bindings are faint outlines. Transparent/inherited bindings show `↧` because the
+board reports the highest active layer, not the full active-layer stack.
 
-## Updating the layout data
+## Layout IDs are not layout data
 
-The overlay renders the **cached Oryx revision** from Keymapp's database — it never talks to
-Oryx and never flashes. After changing the layout in Oryx:
+The board's USB serial has the form **`<layout ID>/<revision ID>`**, such as `GMrOw/rba3al`.
+It identifies the flashed layout but contains **no key assignments, tap/hold labels, macros,
+or layer definitions**. The USB identity check compares that revision with the imported
+`keymap.json` and warns on a mismatch; it does not download legends.
 
 ```sh
-python3 scripts/import-keymapp.py --revision <revision-id> \
-  --output Sources/MoonlanderOverlayKit/Resources/keymap.json
-./scripts/build-app.sh
+"build/Moonlander Overlay.app/Contents/MacOS/MoonlanderOverlay" --print-identity
 ```
 
-- The importer finds Keymapp's cache automatically — the direct-download build keeps it in
-  `~/Library/Application Support/.keymapp/`, the sandboxed App Store build inside its
-  container — and opens it **read-only**. Pass `--cache PATH` if it lives elsewhere.
-- The menu shows both sides: the loaded revision, and `board: <layout hash>/<revision>` read from
-  the keyboard's USB serial, with a ⚠️ when they differ.
-- The importer is a one-time converter for ZSA's export format: physical geometry comes from
-  QMK's `keyboards/zsa/moonlander/keyboard.json`, key indices from the matrix→Oryx table in
-  Keymapp's own frontend, legends from the cache's metadata.
+The overlay reads USB identity on launch, show, Reload Layout, and a newly established live
+connection. A missing/unreadable identity is not reported as a match. It does not check Oryx
+for newer revisions.
 
-**Flashing** is out of scope: use `zapp` (`zapp flash`) or Keymapp, then import the revision
-you flashed so the overlay matches the board.
+## Updating layouts
+
+1. Edit in Oryx and flash the intended firmware with Keymapp or `zapp`.
+2. Release the overlay's HID connection (hide it, select a manual layer, or quit).
+3. Open Keymapp and connect the Moonlander so the intended revision is present in its cache.
+   **No API needs to be enabled.** Disconnect the board in Keymapp or quit when finished.
+4. Read the board's revision and import that explicit revision:
+
+   ```sh
+   cd ~/dev/apps/moonlander-overlay
+   "build/Moonlander Overlay.app/Contents/MacOS/MoonlanderOverlay" --print-identity
+   # Example output: GMrOw/rba3al
+
+   python3 scripts/import-keymapp.py --revision rba3al \
+     --output Sources/MoonlanderOverlayKit/Resources/keymap.json
+   ./scripts/build-app.sh
+   ```
+
+   Replace `rba3al` with the revision you actually flashed. The importer opens the cache
+   read-only and requires `--revision`; it never guesses "latest". An unknown revision lists
+   the available IDs. It defaults to the first existing cache location, preferring the
+   direct-download build:
+
+   ```text
+   ~/Library/Application Support/.keymapp/keymapp.sqlite3
+   ~/Library/Containers/io.zsa.keymapp/Data/Library/Application Support/.keymapp/keymapp.sqlite3
+   ```
+
+   If both exist and the default is stale, use `--cache "/full/path/to/keymapp.sqlite3"`.
+5. Quit the old overlay instance and launch the rebuilt bundle. Select **Follow Keyboard**.
+   A rebuild changes bundled resources on disk but does not reload the already-running app.
+
+For testing another legend file without a rebuild, launch the executable with
+`MOONLANDER_KEYMAP=/absolute/path/keymap.json` and use **Reload Layout** after replacing it.
+Do not edit files inside a signed `.app`; regenerate source resources and rebuild instead.
+
+### Flashing with zapp
+
+```sh
+zapp --help
+zapp flash --help
+```
+
+`zapp flash` accepts a firmware file or an Oryx URL and flashes the board. `zapp update`
+uses the board's USB IDs to find a newer Oryx firmware revision and can flash it automatically.
+Neither command populates the legend cache used by this importer. Release the overlay's HID
+connection before flashing. The overlay sends no flash, bootloader, RGB, or layer-selection
+commands.
 
 ## Architecture
 
-```
-Sources/MoonlanderOverlay/App.swift        menu bar, single-instance hand-off
+```text
+Sources/MoonlanderOverlay/App.swift        menu bar, hotkey wiring, single-instance hand-off
 Sources/MoonlanderOverlayKit/
-  Keymap.swift              layout model: keys, layers, bindings, resolution, validation
-  KeyboardView.swift        keycap renderer (transparent), edge/corner resize handling
-  OverlayResize.swift       pure frame maths for dragging edges (unit-tested)
-  OverlayPanel.swift        borderless, non-activating, clear NSPanel
-  OverlayController.swift   state: live vs manual layer, geometry, persistence, menu state
-  LayerStatusClient.swift   helper process lifecycle + newline-JSON stream parsing
-  GlobalHotKey.swift        Carbon ⌃⌥K (no Accessibility permission needed)
-Sidecar/                    Rust helper: gRPC client for the Keymapp API
+  Keymap.swift                            imported layout model and validation
+  KeyboardIdentity.swift                  read-only USB layout/revision identity
+  KeyboardStateClient.swift               helper lifecycle and ordered JSON snapshot stream
+  MoonlanderMatrix.swift                  physical matrix position → Oryx key ID
+  KeyboardView.swift                      keycaps, held-key highlights, resize grip
+  OverlayResize.swift                     pure anchored resize maths
+  OverlayPanel.swift                      nonactivating transparent floating panel
+  OverlayController.swift                 live/manual state, geometry, identity warning
+  GlobalHotKey.swift                      Carbon global shortcut
+Sidecar/                                  direct hidapi reader, protocol decoder, snapshots
+scripts/import-keymapp.py                  explicit-revision, read-only legend import
+scripts/build-app.sh                       release build, bundle assembly, local ad-hoc signing
 ```
 
-- The app spawns the helper and reads its stdout. The helper stops when the overlay is hidden
-  and exits on its own if the app dies (its stdout pipe closes).
-- Helper contract, one JSON object per line:
-  `{"state":"connected|disconnected|unavailable","layer":<int|null>,"message":"","keyboard":<string|null>}`
-  `--once` exits 1 when the status is unavailable; `--watch [--interval-ms MS]` streams.
-- RPCs used: `GetStatus` (the only source of live layer). The API exposes no key events, RGB
-  readback, or keymap — see below.
+Physical keys are identified by matrix row/column, independent of their output keycodes.
+A held key remains highlighted across layer changes until its release. Disabled and inherited
+positions can also highlight. Highlights clear when the connection is lost, becomes stale,
+or the overlay releases the device. Manual reference mode deliberately does not own HID
+and does not show live presses.
 
-### Direct-HID spike results
+The helper selects the Moonlander's raw interface only: VID `0x3297`, PID `0x1969`, usage page
+`0xff60`, usage `0x61`. It checks protocol version 5, establishes the Oryx session, and receives
+the initial layer immediately. Changes are emitted immediately; periodic full snapshots
+provide a heartbeat. A held key at initial attachment cannot be reconstructed until the
+board emits its event—the protocol supplies no current-held-key snapshot.
 
-Verified on the attached Moonlander (`GMrOw/rba3al`) without Keymapp running:
+### Helper diagnostics
+
+Release the overlay's keyboard connection first, or the diagnostics will see it as busy:
+
+```sh
+./Sidecar/target/release/moonlander-keyboard-state --help
+./Sidecar/target/release/moonlander-keyboard-state --once
+./Sidecar/target/release/moonlander-keyboard-state --watch --interval-ms 200
+```
+
+Each stdout line is a full state snapshot:
+
+```json
+{"state":"connected","layer":0,"pressed":[{"row":2,"column":1}],"message":"","keyboard":"Moonlander Mark I"}
+```
+
+States are `connected`, `busy`, `disconnected`, and `unavailable`. Non-connected states carry
+no live layer and an empty pressed list. `--once` exits 0 for connected, 1 for non-connected;
+bad usage exits 2. Diagnostics are on stderr. No key-history file is written by the app/helper.
+A terminal `--watch` session exposes live physical-key positions; avoid saving it unnecessarily.
+
+The app uses the helper bundled in `Contents/Helpers/moonlander-keyboard-state`.
+`MOONLANDER_SIDECAR=/absolute/path/to/helper` is available for development. Hiding the overlay,
+entering manual mode, or quitting stops the helper and releases the interface.
+
+### Protocol evidence
+
+Verified firmware prefixes:
 
 | Report prefix | Meaning |
 |---|---|
-| `fe 05 fe` | Protocol-version response: version 5 |
-| `04 fe` | Pairing/session established |
-| `05 <layer> fe` | Highest active layer, including the initial layer after pairing |
+| `fe 05 fe` | Oryx protocol version 5 |
+| `04 fe` | Session established |
+| `05 <layer> fe` | Highest active layer |
 | `06 <column> <row> fe` | Physical key down |
 | `07 <column> <row> fe` | Physical key up |
 
-The captured media hold emitted `05 02 fe`, then `05 00 fe` on release.
-Sending protocol-version (`0xfe`) and session-init (`0x01`) requests returned
-the version, pairing acknowledgement, and initial layer 0 immediately.
-No firmware, layer-selection or RGB commands were sent.
-
-These definitions are published in ZSA's
-[Oryx protocol header](https://github.com/zsa/qmk_modules/blob/13890cd7856175de20798689d15ba6a46bf0c5c7/oryx/oryx.h)
+Definitions are published in ZSA's
+[protocol header](https://github.com/zsa/qmk_modules/blob/13890cd7856175de20798689d15ba6a46bf0c5c7/oryx/oryx.h)
 and [firmware implementation](https://github.com/zsa/qmk_modules/blob/13890cd7856175de20798689d15ba6a46bf0c5c7/oryx/oryx.c).
-Only the fields before the `0xfe` terminator are defined; trailing bytes must be
-ignored, not decoded as timestamps or state. Capture times came from the host clock.
-
-A direct-HID helper could therefore replace the API helper and provide press highlighting
-without Keymapp running. Keymapp and the probe could not open the raw interface concurrently
-with the tested `hidapi` backend; the future reader must release it before using Keymapp
-to sync the layout cache. The current overlay still uses the API, not this spike.
-
-
-## Known limitations
-
-- **No key-press highlighting.** The Keymapp API (enumerated from the shipped binary:
-  `GetStatus`, `GetKeyboards`, `ConnectKeyboard`, `ConnectAnyKeyboard`, `DisconnectKeyboard`,
-  `SetLayer`, `UnsetLayer`, `SetRGBLed`, `SetRGBAll`, `SetStatusLed`, `IncreaseBrightness`,
-  `DecreaseBrightness`) carries no per-key state, so presses cannot be observed through it.
-  A separate HID spike verified that the board supplies both key events and layer changes
-  directly; that reader has not replaced the API helper in the shipped overlay.
-- **Inherited keys show `↧` instead of a guessed legend.** The API reports a single layer
-  index; with `TO(layer)` switches the base layer is not necessarily active underneath, so we
-  mark inheritance rather than print a label we cannot verify.
-- **Click-through disables resizing** (and hides the notch).
-- **Revision drift is detected; Oryx is not polled.** The board's USB serial number carries
-  `<layout hash>/<revision>` (e.g. `GMrOw/rba3al`); the overlay reads it and warns when the layout
-  it was built from differs from what is flashed. It cannot know whether a *newer* Oryx revision
-  exists — sync Keymapp and re-run the importer when you change the layout.
-  The USB identity is refreshed on launch, when showing the overlay, and on Reload Layout.
-- Manual layer mode is what you get when Keymapp is absent; the overlay remembers your choice.
+Trailing bytes after the `0xfe` terminator are undefined and ignored, not decoded as timestamps.
+Future firmware/protocol changes may require updating the reader.
 
 ## Troubleshooting
 
-| Symptom | Cause / fix |
+| Symptom | What to do |
 |---|---|
-| `⚠️ Keymapp not reachable · showing layer 0 (not live)` | API disabled, Keymapp not running, or the socket never bound (see the App Store path limit above). Check with `--once` |
-| `⚠️ No keyboard connected` | Connect the keyboard in Keymapp |
-| `Failed to start API: ... bind: invalid argument` | App Store (sandboxed) build; install the direct-download build |
-| Overlay looks frozen after being hidden | By design: polling stops while hidden, resumes on show |
-| Layer does not change live | The keyboard must be connected in Keymapp, not just plugged in |
-| ⌃⌥K does nothing | The shortcut is already taken; use the menu (registration failure is reported on stderr) |
-| Layout looks stale | Re-run the importer for the revision you flashed, then `Reload Layout` or rebuild |
-| `⚠️ board <rev> · overlay <rev> — re-import layout` | The board is flashed with a different Oryx revision than `keymap.json`; re-run the importer for that revision and rebuild |
-| Want to know what the board is flashed with | `"build/Moonlander Overlay.app/Contents/MacOS/MoonlanderOverlay" --print-identity` prints `<layout hash>/<revision>` |
-| Importer: `revision 'x' not in cache (available: none)` | It is reading the wrong cache — usually the abandoned App Store container after switching to the direct-download build. The default probes both; pass `--cache` explicitly if needed |
+| Keyboard busy/in use | Disconnect/quit Keymapp, close another HID probe/helper, then retry. Do not start two helpers together |
+| No Moonlander connected | Check the USB cable and that the board is not in its bootloader |
+| Unsupported protocol | Update the reader for that protocol; it deliberately refuses to guess |
+| No keyboard state / not live | Retry the keyboard connection; inspect helper `--once` output after releasing the app's connection |
+| Keymapp cannot connect | Hide the overlay or use **Release Keyboard (Manual Reference)** first |
+| Presses do not highlight | Enable **Follow Keyboard** and establish HID; manual reference mode releases the connection |
+| Board/overlay revision mismatch | Sync Keymapp, import the flashed revision, rebuild and relaunch |
+| Importer says revision absent | Check its available-ID list and `--cache`; the other build's cache may be stale |
+| Hotkey fails | Another app may have registered it; use the menu. Failure is reported on stderr |
 
-## Tests
-
-`swift test` covers the layout import and validation, binding resolution (mapped / disabled /
-transparent precedence), the sidecar JSON stream (partial lines, multiple records per chunk,
-malformed input), and the resize frame maths (anchoring, minimum/maximum clamping).
-
-The sidecar is exercised separately:
+## Verification
 
 ```sh
-cargo build --release --manifest-path Sidecar/Cargo.toml
-./Sidecar/target/release/moonlander-layer-status --help
+swift test
+cargo test --manifest-path Sidecar/Cargo.toml
+./scripts/build-app.sh
+codesign --verify --deep --strict "build/Moonlander Overlay.app"
 ```
+
+Tests cover layout validation and inheritance, physical matrix boundaries, HID protocol decoding
+and held-state transitions, JSON stream boundaries, USB identity parsing, and resize anchoring.
+Runtime smoke separately exercised the real board handshake, Keymapp/reader exclusivity,
+stale-state recovery after pausing the helper, manual-mode release, rapid hide/show,
+stopped-child cleanup, broken-pipe exit, and shutdown without orphaned readers.
+Native held/released keycap surfaces were also rendered and inspected.
+
+## Pre-cutover checkpoint
+
+Git commit **`c96521a`** records the working Keymapp-API version before this cutover, including
+its dependencies, layout data and build script. Build artifacts are excluded from Git and
+recreated by the script. The current version uses direct HID only; there is no API fallback.

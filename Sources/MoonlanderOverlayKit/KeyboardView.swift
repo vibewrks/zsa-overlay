@@ -14,6 +14,11 @@ public final class KeyboardView: NSView {
         didSet { if oldValue != activeLayerIndex { needsDisplay = true } }
     }
 
+    /// Physical Oryx key IDs held down, independent of their current-layer binding.
+    public var pressedKeyIDs: Set<Int> = [] {
+        didSet { if oldValue != pressedKeyIDs { needsDisplay = true } }
+    }
+
     /// Small status line under/above the board: layer name, or why it is not live.
     public var indicator: String? {
         didSet { if oldValue != indicator { needsDisplay = true } }
@@ -77,7 +82,8 @@ public final class KeyboardView: NSView {
                 height: key.height * scale
             ).insetBy(dx: 1.5, dy: 1.5)
             guard frame.width > 2, frame.height > 2 else { continue }
-            drawKey(keymap.resolvedBinding(at: key.id, activeLayers: activeLayers), in: frame)
+            drawKey(keymap.resolvedBinding(at: key.id, activeLayers: activeLayers),
+                    in: frame, pressed: pressedKeyIDs.contains(key.id))
         }
         drawResizeGrip()
     }
@@ -179,7 +185,7 @@ public final class KeyboardView: NSView {
 
     // MARK: - Keycap drawing
 
-    private func drawKey(_ binding: KeyBinding?, in rect: NSRect) {
+    private func drawKey(_ binding: KeyBinding?, in rect: NSRect, pressed: Bool) {
         let radius = min(rect.height * 0.22, 6)
         let path = NSBezierPath(roundedRect: rect, xRadius: radius, yRadius: radius)
         let kind = binding?.kind ?? .transparent
@@ -207,10 +213,19 @@ public final class KeyboardView: NSView {
             path.stroke()
         }
 
+        if pressed {
+            NSColor.controlAccentColor.withAlphaComponent(0.60).setFill()
+            path.fill()
+            path.setLineDash([], count: 0, phase: 0)
+            NSColor.controlAccentColor.setStroke()
+            path.lineWidth = 2
+            path.stroke()
+        }
+
         guard rect.height >= 16 else { return }
 
         let primarySize = min(max(rect.height * 0.34, 7), 13)
-        let borderColor: NSColor = kind == .mapped
+        let borderColor: NSColor = kind == .mapped || pressed
             ? NSColor.white.withAlphaComponent(0.92)
             : NSColor.white.withAlphaComponent(0.28)
 

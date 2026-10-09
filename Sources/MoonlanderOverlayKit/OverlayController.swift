@@ -1,6 +1,6 @@
 import AppKit
 
-/// Owns the overlay window, the keymap, and the live layer source.
+/// Owns the overlay window, keymap, and direct-HID layer/physical-key source.
 @MainActor
 public final class OverlayController: NSObject, NSWindowDelegate {
     public struct LayerChoice: Sendable, Equatable {
@@ -14,6 +14,7 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     public var isVisible: Bool { panel.isVisible }
     public var isPinned: Bool { panel.ignoresMouseEvents }
     public var isFollowingKeyboard: Bool { followingKeyboard }
+    public var currentLayerIndex: Int { displayLayerIndex }
     public var keymapTitle: String { keymap.map { "\($0.title) · \($0.revision)" } ?? "no layout loaded" }
     public var layerChoices: [LayerChoice] {
         (keymap?.layers ?? []).map { LayerChoice(index: $0.index, title: $0.title) }
@@ -27,11 +28,11 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     public var statusSummary: String {
         switch availability {
         case .live(let message) where message.state == .connected:
-            return "following keyboard"
+            return "following keyboard · direct HID"
         case .live(let message):
             return message.message
         case .stale:
-            return "layer status unavailable"
+            return "keyboard state unavailable"
         case .starting:
             return "connecting…"
         case .stopped:
@@ -61,12 +62,12 @@ public final class OverlayController: NSObject, NSWindowDelegate {
 
     private let view = KeyboardView()
     private let panel: OverlayPanel
-    private var client: LayerStatusClient?
+    private var client: KeyboardStateClient?
     private var keymap: Keymap?
     private var followingKeyboard = true
     private var manualLayer = 0
     private var reportedLayer: Int?
-    private var availability: LayerStatusClient.Availability = .stopped
+    private var availability: KeyboardStateClient.Availability = .stopped
     private var loadFailure: String?
     private var flashedIdentity: KeyboardIdentity?
 
@@ -204,14 +205,17 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     private func updateClientLifecycle() {
         guard followingKeyboard, isVisible else {
             client?.stop()
+            availability = .stopped
+            reportedLayer = nil
+            view.pressedKeyIDs = []
             return
         }
-        guard let sidecarURL = LayerStatusClient.resolveSidecarURL() else {
-            availability = .stale
+        guard let sidecarURL = KeyboardStateClient.resolveSidecarURL() else {
+            handle(.stale)
             return
         }
         if client == nil {
-            let client = LayerStatusClient(sidecarURL: sidecarURL)
+            let client = KeyboardStateClient(sidecarURL: sidecarURL)
             client.onUpdate = { [weak self] availability in
                 self?.handle(availability)
             }
@@ -220,22 +224,31 @@ public final class OverlayController: NSObject, NSWindowDelegate {
         client?.start()
     }
 
-    private func handle(_ availability: LayerStatusClient.Availability) {
-        self.availability = availability
-        switch availability {
-        case .live(let message):
-            if message.state == .connected, let layer = message.layer {
-                reportedLayer = layer
-            } else {
-                reportedLayer = nil
-            }
-        case .starting, .stale, .stopped:
-            reportedLayer = nil
+    private func handle(_ availability: KeyboardStateClient.Availability) {
+        let previousLayer = displayLayerIndex
+        let previousSummary = statusSummary
+        let previousBoard = boardSummary
+        let wasConnected: Bool
+        if case .live(let message) = self.availability, message.state == .connected {
+            wasConnected = true
+        } else {
+            wasConnected = false
         }
-        applyState()
+        self.availability = availability
+        var pressed: Set<Int> = []
+        reportedLayer = nil
+        if followingKeyboard, isVisible, case .live(let message) = availability,
+           message.state == .connected, let layer = message.layer {
+            reportedLayer = layer
+            pressed = message.pressedKeyIDs
+            if !wasConnected { refreshFlashedIdentity() }
+        }
+        view.pressedKeyIDs = pressed
+        applyState(notifyMenu: previousLayer != displayLayerIndex
+            || previousSummary != statusSummary || previousBoard != boardSummary)
     }
 
-    private func applyState() {
+    private func applyState(notifyMenu: Bool = true) {
         if let loadFailure {
             view.indicator = loadFailure
         } else if let revisionWarning {
@@ -245,13 +258,15 @@ public final class OverlayController: NSObject, NSWindowDelegate {
             case .live(let message) where message.state == .connected && message.layer != nil:
                 view.indicator = "layer \(displayLayerIndex) · \(title(forLayer: displayLayerIndex) ?? "?")"
             case .live(let message) where message.state == .disconnected:
-                view.indicator = "⚠️ No keyboard connected · showing layer \(manualLayer) (not live)"
-            case .live:
-                view.indicator = "⚠️ Keymapp not reachable · showing layer \(manualLayer) (not live)"
+                view.indicator = "⚠️ No Moonlander connected · showing layer \(manualLayer) (not live)"
+            case .live(let message) where message.state == .busy:
+                view.indicator = "⚠️ Keyboard in use — disconnect/quit Keymapp · not live"
+            case .live(let message):
+                view.indicator = "⚠️ \(message.message) · not live"
             case .stale:
-                view.indicator = "⚠️ no layer status — showing layer \(manualLayer) (manual); Keymapp may be closed"
+                view.indicator = "⚠️ No keyboard state · showing layer \(manualLayer) (not live)"
             case .starting:
-                view.indicator = "connecting to Keymapp…"
+                view.indicator = "connecting directly to Moonlander…"
             case .stopped:
                 view.indicator = "not following keyboard — layer \(manualLayer) · \(title(forLayer: manualLayer) ?? "?")"
             }
@@ -259,7 +274,7 @@ public final class OverlayController: NSObject, NSWindowDelegate {
             view.indicator = "layer \(manualLayer) · \(title(forLayer: manualLayer) ?? "?") · manual"
         }
         view.activeLayerIndex = displayLayerIndex
-        onStateChange?()
+        if notifyMenu { onStateChange?() }
     }
 
     private var displayLayerIndex: Int {

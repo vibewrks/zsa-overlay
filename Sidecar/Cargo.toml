@@ -1,22 +1,17 @@
 [package]
-name = "moonlander-layer-status"
+name = "moonlander-keyboard-state"
 version = "0.1.0"
 edition = "2021"
 rust-version = "1.88"
-description = "Reports the Moonlander's active layer from the Keymapp API as JSON lines"
+description = "Reports the Moonlander's active layer and pressed keys from the Oryx raw HID interface as JSON lines"
 publish = false
 
 [[bin]]
-name = "moonlander-layer-status"
+name = "moonlander-keyboard-state"
 path = "src/main.rs"
 
 [dependencies]
-prost = "0.14"
+ctrlc = { version = "3", features = ["termination"] }
+hidapi = "2.6"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal", "time"] }
-tonic = { version = "0.14", default-features = false, features = ["channel", "codegen"] }
-tonic-prost = "0.14"
-
-[build-dependencies]
-tonic-prost-build = "0.14"

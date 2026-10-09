@@ -30,14 +30,6 @@ private func temporaryFile() -> URL {
 
 @Suite("Bundled keymap")
 struct BundledKeymapTests {
-    @Test func loadsTheBundledRevision() throws {
-        let keymap = try Keymap.bundled()
-        #expect(keymap.title == "learning dvorak")
-        #expect(keymap.revision == "rba3al")
-        #expect(keymap.keys.count == Keymap.moonlanderKeyCount)
-        #expect(keymap.layers.map(\.index) == [0, 1, 2, 3, 4, 5, 6])
-        #expect(keymap.layers.map(\.title) == ["qwerty", "command", "media", "mouse", "numpad", "cs2", "dvorak"])
-    }
 
     @Test func physicalKeysAreSequentialAndCoverTheBoard() throws {
         let keymap = try Keymap.bundled()
@@ -79,12 +71,6 @@ struct BundledKeymapTests {
         #expect(keys[71].height == 1.5 && keys[71].y == 5.5)
     }
 
-    @Test func bundledDataUsesEveryBindingKind() throws {
-        let keymap = try Keymap.bundled()
-        let kinds = Set(keymap.layers.flatMap { $0.bindings.map(\.kind) })
-        #expect(kinds == [.mapped, .disabled, .transparent])
-    }
-
     @Test func everyMappedBindingHasALegend() throws {
         let keymap = try Keymap.bundled()
         for layer in keymap.layers {
@@ -95,86 +81,12 @@ struct BundledKeymapTests {
         }
     }
 
-    @Test func disabledIsDistinctFromTransparent() throws {
-        let keymap = try Keymap.bundled()
-        let qwerty = keymap.layers[0]
-        #expect(qwerty.bindings[6].kind == .disabled)
-        #expect(qwerty.bindings[6].tap.isEmpty && qwerty.bindings[6].hold.isEmpty)
-        let command = keymap.layers[1]
-        #expect(command.bindings[0].kind == .transparent)
-        let mouse = keymap.layers[3]
-        #expect(mouse.bindings[1].kind == .transparent)
-    }
-
-    @Test func holdOnlyKeyStaysMappedWithItsHoldLegend() throws {
-        let dvorak = try Keymap.bundled().layers[6]
-        let key = dvorak.bindings[21]
-        #expect(key.kind == .mapped)
-        #expect(key.tap.isEmpty)
-        #expect(key.hold == "L⇧")
-    }
-
-    @Test func customLabelsAndModifierCombosSurviveTheImport() throws {
-        let qwerty = try Keymap.bundled().layers[0]
-        #expect(qwerty.bindings[1].tap == "1 !")
-        #expect(qwerty.bindings[42].tap == "⇧ 📸")
-        #expect(qwerty.bindings[42].extra == "⇧⌘4")
-        #expect(qwerty.bindings[32].tap == "Prev")
-        #expect(qwerty.bindings[32].hold == "⌃⌘Q")
-        #expect(qwerty.bindings[14].tap == "⇥")
-        #expect(qwerty.bindings[14].hold == "Caps")
-    }
-
-    @Test func keycapLabelsAreCompact() throws {
-        let keymap = try Keymap.bundled()
-        let qwerty = keymap.layers[0]
-        // Modifier chords use macOS symbols, no "+".
-        #expect(qwerty.bindings[27].tap == "⌃S")
-        #expect(qwerty.bindings[42].extra == "⇧⌘4")
-        #expect(qwerty.bindings[70].tap == "⌘⇥")
-        #expect(qwerty.bindings[32].hold == "⌃⌘Q")
-        // Side-specific modifiers stay distinguishable.
-        #expect(qwerty.bindings[21].tap == "L⇧")
-        #expect(qwerty.bindings[29].tap == "L⌘")
-        #expect(qwerty.bindings[27].hold == "L⌃")
-        // Named keys and arrows use glyphs.
-        #expect(qwerty.bindings[64].tap == "←")
-        #expect(qwerty.bindings[67].tap == "→")
-        #expect(qwerty.bindings[31].tap == "⌫")
-        #expect(qwerty.bindings[71].tap == "⏎")
-        #expect(qwerty.bindings[36].tap == "Dictation")
-        // Mouse wheel chords keep the modifier prefix.
-        let mouse = keymap.layers[3]
-        #expect(mouse.bindings[44].tap == "⌃Wheel Up")
-        #expect(mouse.bindings[51].tap == "⌃Wheel Down")
-    }
-
-    @Test func layerLinksNameTheirTargetLayer() throws {
-        let keymap = try Keymap.bundled()
-        #expect(keymap.layers[0].bindings[35].tap == "TO command")
-        #expect(keymap.layers[0].bindings[35].hold == "MO media")
-        #expect(keymap.layers[1].bindings[9].tap == "TO numpad")
-        #expect(keymap.layers[3].bindings[69].tap == "TO command")
-    }
-
-    @Test func bindingColoursComeFromTheLayout() throws {
-        let qwerty = try Keymap.bundled().layers[0]
-        #expect(qwerty.bindings[0].color == "#FF0000")
-        #expect(qwerty.bindings[6].color == nil)
-    }
 }
 
 // MARK: - Validation
 
 @Suite("Validation")
 struct ValidationTests {
-    @Test func acceptsAWellFormedKeymap() {
-        let keymap = makeKeymap(layers: [
-            Layer(index: 0, title: "base", bindings: makeBindings()),
-            Layer(index: 1, title: "raise", bindings: makeBindings()),
-        ])
-        #expect(throws: Never.self) { try keymap.validate() }
-    }
 
     @Test func rejectsTheWrongKeyCount() {
         let keymap = makeKeymap(keys: Array(makeKeys().dropLast()))

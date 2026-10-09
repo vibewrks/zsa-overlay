@@ -105,14 +105,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         follow.state = controller.isFollowingKeyboard ? .on : .off
         menu.addItem(follow)
 
+        let release = menuItem("Release Keyboard (Manual Reference)", action: #selector(releaseKeyboard))
+        release.isEnabled = controller.isFollowingKeyboard
+        menu.addItem(release)
+
         let layerItem = NSMenuItem(title: "Layer", action: nil, keyEquivalent: "")
         let layerMenu = NSMenu()
         for choice in controller.layerChoices {
             let item = menuItem("\(choice.index) · \(choice.title)", action: #selector(selectLayer(_:)))
             item.representedObject = choice.index
-            item.state = (!controller.isFollowingKeyboard && choice.index == currentLayerIndex())
-                || (controller.isFollowingKeyboard && choice.index == currentLayerIndex())
-                ? .on : .off
+            item.state = choice.index == controller.currentLayerIndex ? .on : .off
             layerMenu.addItem(item)
         }
         layerItem.submenu = layerMenu
@@ -136,7 +138,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         board.isEnabled = false
         menu.addItem(board)
 
-        let retry = menuItem("Retry Layer Status", action: #selector(retryStatus))
+        let retry = menuItem("Retry Keyboard Connection", action: #selector(retryStatus))
         retry.isEnabled = controller.isFollowingKeyboard
         menu.addItem(retry)
 
@@ -147,9 +149,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.menu = menu
     }
 
-    private func currentLayerIndex() -> Int {
-        controller.layerChoices.first { _ in true }?.index ?? 0
-    }
 
     private func menuItem(_ title: String, action: Selector, key: String = "") -> NSMenuItem {
         let item = NSMenuItem(title: title, action: action, keyEquivalent: key)
@@ -160,6 +159,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func toggleOverlay() { controller.toggle() }
     @objc private func revealLayoutFile() { controller.revealLayoutFile() }
     @objc private func followKeyboard() { controller.followKeyboard() }
+    @objc private func releaseKeyboard() { controller.selectLayer(controller.currentLayerIndex) }
     @objc private func togglePinned() { controller.setPinned(!controller.isPinned) }
     @objc private func growOverlay() { controller.grow() }
     @objc private func shrinkOverlay() { controller.shrink() }

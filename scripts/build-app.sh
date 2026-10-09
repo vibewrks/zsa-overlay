@@ -14,7 +14,7 @@ BIN_PATH="$(swift build -c "$CONFIGURATION" --package-path "$ROOT" --show-bin-pa
 echo "==> Building Rust sidecar (release)"
 cargo build --release --manifest-path "$ROOT/Sidecar/Cargo.toml"
 
-SIDECAR="$ROOT/Sidecar/target/release/moonlander-layer-status"
+SIDECAR="$ROOT/Sidecar/target/release/moonlander-keyboard-state"
 KEYMAP="$ROOT/Sources/MoonlanderOverlayKit/Resources/keymap.json"
 
 for required in "$BIN_PATH/MoonlanderOverlay" "$SIDECAR" "$KEYMAP"; do
@@ -29,7 +29,7 @@ rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Helpers" "$APP/Contents/Resources"
 
 cp "$BIN_PATH/MoonlanderOverlay" "$APP/Contents/MacOS/MoonlanderOverlay"
-cp "$SIDECAR" "$APP/Contents/Helpers/moonlander-layer-status"
+cp "$SIDECAR" "$APP/Contents/Helpers/moonlander-keyboard-state"
 cp "$KEYMAP" "$APP/Contents/Resources/keymap.json"
 
 # SwiftPM resource bundle, so Bundle.module also resolves inside the .app.
@@ -66,7 +66,7 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
 </plist>
 PLIST
 
-chmod +x "$APP/Contents/MacOS/MoonlanderOverlay" "$APP/Contents/Helpers/moonlander-layer-status"
+chmod +x "$APP/Contents/MacOS/MoonlanderOverlay" "$APP/Contents/Helpers/moonlander-keyboard-state"
 
 echo "==> Ad-hoc signing"
 codesign --force --deep --sign - "$APP" >/dev/null
