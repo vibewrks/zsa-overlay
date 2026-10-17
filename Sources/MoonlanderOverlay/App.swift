@@ -124,6 +124,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         pinned.state = controller.isPinned ? .on : .off
         menu.addItem(pinned)
 
+        let ledColors = menuItem("Use LED Colors", action: #selector(toggleLedColors))
+        ledColors.state = controller.highlightStyle == .ledColor ? .on : .off
+        menu.addItem(ledColors)
+
         menu.addItem(menuItem("Larger  (drag edges to resize)", action: #selector(growOverlay)))
         menu.addItem(menuItem("Smaller", action: #selector(shrinkOverlay)))
 
@@ -161,6 +165,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func followKeyboard() { controller.followKeyboard() }
     @objc private func releaseKeyboard() { controller.selectLayer(controller.currentLayerIndex) }
     @objc private func togglePinned() { controller.setPinned(!controller.isPinned) }
+    @objc private func toggleLedColors() {
+        controller.setHighlightStyle(controller.highlightStyle == .ledColor ? .systemAccent : .ledColor)
+    }
     @objc private func growOverlay() { controller.grow() }
     @objc private func shrinkOverlay() { controller.shrink() }
     @objc private func retryStatus() { controller.retryStatus() }

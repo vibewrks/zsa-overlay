@@ -70,6 +70,7 @@ name when a second board lands.
 | Release HID ownership without quitting | **Release Keyboard (Manual Reference)** |
 | Display one reference layer without reading the board | **Layer** submenu; selection is remembered |
 | Pass clicks to applications underneath | **Pinned (click-through)** |
+| Tint borders with Oryx LED colours (fill on press) vs system accent | **Use LED Colors**; remembered |
 | Resize | Drag an edge/corner; bottom-right notch shows the affordance, or use **Larger/Smaller** |
 | Reconnect the HID helper | **Retry Keyboard Connection** |
 | Re-read legends and board identity | **Reload Layout** |
@@ -77,7 +78,10 @@ name when a second board lands.
 
 The grip disappears in click-through mode. Minimum panel size is 420×150. Keycaps fit the
 window without changing their aspect ratio; secondary legends disappear at small sizes.
-Disabled bindings are faint outlines. Transparent/inherited bindings show `↧` because the
+With **Use LED Colors**, each mapped key's border takes its Oryx LED colour for the
+active layer and a press fills the key with it; untinted keys and the system-accent
+mode keep the historical treatment. Disabled bindings are faint outlines.
+Transparent/inherited bindings show `↧` because the
 board reports the highest active layer, not the full active-layer stack.
 
 ## Layout IDs are not layout data
@@ -98,10 +102,40 @@ for newer revisions.
 ## Updating layouts
 
 1. Edit in Oryx and flash the intended firmware with Keymapp or `zapp`.
-2. Release the overlay's HID connection (hide it, select a manual layer, or quit).
-3. Open Keymapp and connect the Moonlander so the intended revision is present in its cache.
+2. Import the flashed revision with either importer below, then rebuild:
+
+   ```sh
+   cd ~/dev/apps/zsa-overlay
+   ./scripts/build-app.sh
+   ```
+
+3. Quit the old overlay instance and launch the rebuilt bundle. Select **Follow Keyboard**.
+   A rebuild changes bundled resources on disk but does not reload the already-running app.
+
+### Direct import from Oryx (preferred)
+
+```sh
+"build/Moonlander Overlay.app/Contents/MacOS/MoonlanderOverlay" --print-identity
+# Example output: GMrOw/rba3al
+
+python3 scripts/import-oryx.py --layout-id GMrOw --revision rba3al \
+  --output Sources/MoonlanderOverlayKit/Resources/keymap.json
+```
+
+Replace `GMrOw`/`rba3al` with the layout and revision you actually flashed
+(`--revision latest` follows the newest export). The layout must be public
+(Oryx > layout settings > privacy). Keymapp is not involved: legends come from
+the exported `keymap.c` and colours from its `ledmap` table. Compared with the
+Keymapp import below, custom Oryx labels, shifted hints (`1 !`), tap-dance step
+names and per-key colours on uncoloured layers do not survive, and colours may
+differ by a least-significant bit.
+
+### Import from the Keymapp cache (fallback)
+
+1. Release the overlay's HID connection (hide it, select a manual layer, or quit).
+2. Open Keymapp and connect the Moonlander so the intended revision is present in its cache.
    **No API needs to be enabled.** Disconnect the board in Keymapp or quit when finished.
-4. Read the board's revision and import that explicit revision:
+3. Read the board's revision and import that explicit revision:
 
    ```sh
    cd ~/dev/apps/zsa-overlay
@@ -124,8 +158,6 @@ for newer revisions.
    ```
 
    If both exist and the default is stale, use `--cache "/full/path/to/keymapp.sqlite3"`.
-5. Quit the old overlay instance and launch the rebuilt bundle. Select **Follow Keyboard**.
-   A rebuild changes bundled resources on disk but does not reload the already-running app.
 
 For testing another legend file without a rebuild, launch the executable with
 `MOONLANDER_KEYMAP=/absolute/path/keymap.json` and use **Reload Layout** after replacing it.
@@ -159,7 +191,8 @@ Sources/MoonlanderOverlayKit/
   OverlayController.swift                 live/manual state, geometry, identity warning
   GlobalHotKey.swift                      Carbon global shortcut
 Sidecar/                                  direct hidapi reader, protocol decoder, snapshots
-scripts/import-keymapp.py                  explicit-revision, read-only legend import
+scripts/import-oryx.py                    direct Oryx fetch (GraphQL + source zip), no Keymapp
+scripts/import-keymapp.py                 explicit-revision, read-only Keymapp-cache legend import
 scripts/build-app.sh                       release build, bundle assembly, local ad-hoc signing
 ```
 
