@@ -11,30 +11,47 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     /// Fired whenever menu-visible state changes.
     public var onStateChange: (() -> Void)?
 
-    public var isVisible: Bool { panel.isVisible }
-    public var isPinned: Bool { panel.ignoresMouseEvents }
-    public var isFollowingKeyboard: Bool { followingKeyboard }
+    public var isVisible: Bool {
+        panel.isVisible
+    }
+
+    public var isPinned: Bool {
+        panel.ignoresMouseEvents
+    }
+
+    public var isFollowingKeyboard: Bool {
+        followingKeyboard
+    }
+
     public private(set) var opacity: CGFloat = 1
     /// Zero would make the overlay vanish, so the menu slider stops at ten percent.
-    public static let opacityRange: ClosedRange<CGFloat> = 0.1...1.0
+    public static let opacityRange: ClosedRange<CGFloat> = 0.1 ... 1.0
     public private(set) var showsLayerName = true
-    public var currentLayerIndex: Int { displayLayerIndex }
+    public var currentLayerIndex: Int {
+        displayLayerIndex
+    }
+
     public private(set) var highlightStyle: KeyHighlightStyle = .ledColor
-    public var keymapTitle: String { keymap.map { "\($0.title) · \($0.revision)" } ?? "no layout loaded" }
+    public var keymapTitle: String {
+        keymap.map { "\($0.title) · \($0.revision)" } ?? "no layout loaded"
+    }
+
     public var layerChoices: [LayerChoice] {
         (keymap?.layers ?? []).map { LayerChoice(index: $0.index, title: $0.title) }
     }
+
     public var currentLayerTitle: String {
         if followingKeyboard, let reportedLayer, let title = title(forLayer: reportedLayer) {
             return "\(title) (\(reportedLayer))"
         }
         return "\(title(forLayer: manualLayer) ?? "layer") (\(manualLayer)) · manual"
     }
+
     public var statusSummary: String {
         switch availability {
-        case .live(let message) where message.state == .connected:
+        case let .live(message) where message.state == .connected:
             return "following keyboard · direct HID"
-        case .live(let message):
+        case let .live(message):
             return message.message
         case .stale:
             return "keyboard state unavailable"
@@ -83,7 +100,7 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     private static let opacityKey = "OverlayOpacity"
     private static let showsLayerNameKey = "ShowsLayerName"
 
-    public override init() {
+    override public init() {
         panel = OverlayPanel(
             contentRect: NSRect(x: 0, y: 0, width: 900, height: 360),
             contentView: view
@@ -97,7 +114,8 @@ public final class OverlayController: NSObject, NSWindowDelegate {
         followingKeyboard = defaults.object(forKey: Self.followsKeyboardKey) as? Bool ?? true
         manualLayer = defaults.integer(forKey: Self.manualLayerKey)
         highlightStyle = KeyHighlightStyle(
-            rawValue: defaults.string(forKey: Self.highlightStyleKey) ?? "") ?? .ledColor
+            rawValue: defaults.string(forKey: Self.highlightStyleKey) ?? ""
+        ) ?? .ledColor
         let savedOpacity = defaults.object(forKey: Self.opacityKey) as? Double ?? 1
         opacity = Self.clampedOpacity(CGFloat(savedOpacity))
         panel.alphaValue = opacity
@@ -148,10 +166,15 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     }
 
     /// The caps scale to whatever size the panel has; drag its edges, or use the menu.
-    public func grow() { scalePanel(by: 1.15) }
-    public func shrink() { scalePanel(by: 1 / 1.15) }
+    public func grow() {
+        scalePanel(by: 1.15)
+    }
 
-    public func windowDidEndLiveResize(_ notification: Notification) {
+    public func shrink() {
+        scalePanel(by: 1 / 1.15)
+    }
+
+    public func windowDidEndLiveResize(_: Notification) {
         saveFrame()
     }
 
@@ -271,7 +294,7 @@ public final class OverlayController: NSObject, NSWindowDelegate {
         let previousSummary = statusSummary
         let previousBoard = boardSummary
         let wasConnected: Bool
-        if case .live(let message) = self.availability, message.state == .connected {
+        if case let .live(message) = self.availability, message.state == .connected {
             wasConnected = true
         } else {
             wasConnected = false
@@ -279,11 +302,14 @@ public final class OverlayController: NSObject, NSWindowDelegate {
         self.availability = availability
         var pressed: Set<Int> = []
         reportedLayer = nil
-        if followingKeyboard, isVisible, case .live(let message) = availability,
-           message.state == .connected, let layer = message.layer {
+        if followingKeyboard, isVisible, case let .live(message) = availability,
+           message.state == .connected, let layer = message.layer
+        {
             reportedLayer = layer
             pressed = message.pressedKeyIDs
-            if !wasConnected { refreshFlashedIdentity() }
+            if !wasConnected {
+                refreshFlashedIdentity()
+            }
         }
         view.pressedKeyIDs = pressed
         applyState(notifyMenu: previousLayer != displayLayerIndex
@@ -297,22 +323,28 @@ public final class OverlayController: NSObject, NSWindowDelegate {
         view.indicator = statusWarning
         view.activeLayerIndex = displayLayerIndex
         view.highlightStyle = highlightStyle
-        if notifyMenu { onStateChange?() }
+        if notifyMenu {
+            onStateChange?()
+        }
     }
 
     /// Warning/error text that takes over the top strip; nil while live.
     private var statusWarning: String? {
-        if let loadFailure { return loadFailure }
-        if let revisionWarning { return revisionWarning }
+        if let loadFailure {
+            return loadFailure
+        }
+        if let revisionWarning {
+            return revisionWarning
+        }
         guard followingKeyboard else { return nil }
         switch availability {
-        case .live(let message) where message.state == .connected && message.layer != nil:
+        case let .live(message) where message.state == .connected && message.layer != nil:
             return nil
-        case .live(let message) where message.state == .disconnected:
+        case let .live(message) where message.state == .disconnected:
             return "⚠️ No Moonlander connected · showing layer \(manualLayer) (not live)"
-        case .live(let message) where message.state == .busy:
+        case let .live(message) where message.state == .busy:
             return "⚠️ Keyboard in use — disconnect/quit Keymapp · not live"
-        case .live(let message):
+        case let .live(message):
             return "⚠️ \(message.message) · not live"
         case .stale:
             return "⚠️ No keyboard state · showing layer \(manualLayer) (not live)"
@@ -324,7 +356,9 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     }
 
     private var displayLayerIndex: Int {
-        if followingKeyboard, let reportedLayer { return reportedLayer }
+        if followingKeyboard, let reportedLayer {
+            return reportedLayer
+        }
         return manualLayer
     }
 
@@ -364,14 +398,20 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     private static func resolvedKeymapURL() -> URL? {
         if let override = ProcessInfo.processInfo.environment["MOONLANDER_KEYMAP"], !override.isEmpty {
             let url = URL(fileURLWithPath: override)
-            if FileManager.default.fileExists(atPath: url.path) { return url }
+            if FileManager.default.fileExists(atPath: url.path) {
+                return url
+            }
         }
-        if let url = Bundle.main.url(forResource: "keymap", withExtension: "json") { return url }
+        if let url = Bundle.main.url(forResource: "keymap", withExtension: "json") {
+            return url
+        }
         return Bundle.module.url(forResource: "keymap", withExtension: "json")
     }
 
     private static func loadKeymapFromDisk() throws -> Keymap {
-        if let url = resolvedKeymapURL() { return try Keymap.load(url: url) }
+        if let url = resolvedKeymapURL() {
+            return try Keymap.load(url: url)
+        }
         return try Keymap.bundled()
     }
 }

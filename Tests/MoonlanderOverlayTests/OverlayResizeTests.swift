@@ -1,7 +1,6 @@
 import CoreGraphics
-import Testing
-
 @testable import MoonlanderOverlayKit
+import Testing
 
 @Suite("Overlay resize maths")
 struct OverlayResizeTests {
@@ -89,5 +88,40 @@ struct OverlayResizeTests {
     func noEdges() {
         let result = resized([], dx: 100, dy: 100)
         #expect(result == initial)
+    }
+}
+
+@Suite("Overlay resize hit zones")
+struct OverlayResizeHitZoneTests {
+    private let size = CGSize(width: 900, height: 360)
+
+    private func edges(
+        at point: CGPoint,
+        excluding handles: [CGRect] = []
+    ) -> OverlayResize.Edges {
+        OverlayResize.edges(at: point, size: size, grabInset: 10, excluding: handles)
+    }
+
+    @Test("the outer band of each side resizes, corners on both axes")
+    func borderBand() {
+        #expect(edges(at: CGPoint(x: 4, y: 180)) == .leading)
+        #expect(edges(at: CGPoint(x: 896, y: 180)) == .trailing)
+        #expect(edges(at: CGPoint(x: 450, y: 4)) == .top)
+        #expect(edges(at: CGPoint(x: 450, y: 356)) == .bottom)
+        #expect(edges(at: CGPoint(x: 4, y: 4)) == [.leading, .top])
+    }
+
+    @Test("the interior is not an edge")
+    func interior() {
+        #expect(edges(at: CGPoint(x: 450, y: 180)).isEmpty)
+    }
+
+    @Test("a drag handle over the top edge suppresses the resize edge it covers")
+    func handleBeatsOverlappingEdge() {
+        let pill = CGRect(x: 400, y: 0, width: 100, height: 17)
+        #expect(edges(at: CGPoint(x: 450, y: 5), excluding: [pill]).isEmpty)
+        // Beside the handle the top edge still resizes.
+        #expect(edges(at: CGPoint(x: 200, y: 5), excluding: [pill]) == .top)
+        #expect(edges(at: CGPoint(x: 700, y: 5), excluding: [pill]) == .top)
     }
 }

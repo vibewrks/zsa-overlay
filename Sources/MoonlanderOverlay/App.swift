@@ -33,7 +33,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var hotKey: GlobalHotKey?
     private var observer: NSObjectProtocol?
 
-    func applicationDidFinishLaunching(_ notification: Notification) {
+    func applicationDidFinishLaunching(_: Notification) {
         guard !handOffToRunningInstance() else { return }
 
         controller.onStateChange = { [weak self] in self?.rebuildMenu() }
@@ -55,14 +55,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+    func applicationShouldHandleReopen(_: NSApplication, hasVisibleWindows _: Bool) -> Bool {
         controller.show()
         return false
     }
 
-    func applicationWillTerminate(_ notification: Notification) {
+    func applicationWillTerminate(_: Notification) {
         controller.shutdown()
-        if let observer { DistributedNotificationCenter.default().removeObserver(observer) }
+        if let observer {
+            DistributedNotificationCenter.default().removeObserver(observer)
+        }
     }
 
     /// A second launch should surface the running overlay rather than start a second helper.
@@ -160,7 +162,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.menu = menu
     }
 
-
     private func menuItem(_ title: String, action: Selector, key: String = "") -> NSMenuItem {
         let item = NSMenuItem(title: title, action: action, keyEquivalent: key)
         item.target = self
@@ -207,11 +208,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         "\(Int((opacity * 100).rounded()))%"
     }
 
-    @objc private func toggleOverlay() { controller.toggle() }
-    @objc private func revealLayoutFile() { controller.revealLayoutFile() }
-    @objc private func followKeyboard() { controller.followKeyboard() }
-    @objc private func releaseKeyboard() { controller.selectLayer(controller.currentLayerIndex) }
-    @objc private func togglePinned() { controller.setPinned(!controller.isPinned) }
+    @objc private func toggleOverlay() {
+        controller.toggle()
+    }
+
+    @objc private func revealLayoutFile() {
+        controller.revealLayoutFile()
+    }
+
+    @objc private func followKeyboard() {
+        controller.followKeyboard()
+    }
+
+    @objc private func releaseKeyboard() {
+        controller.selectLayer(controller.currentLayerIndex)
+    }
+
+    @objc private func togglePinned() {
+        controller.setPinned(!controller.isPinned)
+    }
+
     @objc private func toggleLedColors() {
         controller.setHighlightStyle(controller.highlightStyle == .ledColor ? .systemAccent : .ledColor)
     }
@@ -226,11 +242,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             value.stringValue = Self.percentString(controller.opacity)
         }
     }
-    @objc private func growOverlay() { controller.grow() }
-    @objc private func shrinkOverlay() { controller.shrink() }
-    @objc private func retryStatus() { controller.retryStatus() }
-    @objc private func reloadKeymap() { controller.reloadKeymap() }
-    @objc private func quit() { NSApp.terminate(nil) }
+
+    @objc private func growOverlay() {
+        controller.grow()
+    }
+
+    @objc private func shrinkOverlay() {
+        controller.shrink()
+    }
+
+    @objc private func retryStatus() {
+        controller.retryStatus()
+    }
+
+    @objc private func reloadKeymap() {
+        controller.reloadKeymap()
+    }
+
+    @objc private func quit() {
+        NSApp.terminate(nil)
+    }
 
     @objc private func selectLayer(_ sender: NSMenuItem) {
         guard let index = sender.representedObject as? Int else { return }

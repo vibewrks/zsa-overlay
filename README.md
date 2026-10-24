@@ -74,9 +74,15 @@ name when a second board lands.
 | Tint borders with Oryx LED colours (fill on press) vs system accent | **Use LED Colors**; remembered |
 | Adjust how opaque the overlay is (10–100%) | **Opacity** slider; remembered |
 | Resize | Drag an edge/corner; bottom-right notch shows the affordance, or use **Larger/Smaller** |
+| Move the overlay | Drag the layer-name pill, or any point away from the edges |
 | Reconnect the HID helper | **Retry Keyboard Connection** |
 | Re-read legends and board identity | **Reload Layout** |
 | Locate the loaded legend file | **Reveal Layout File** |
+
+The layer-name pill uses clear Liquid Glass on macOS 26 or later and frosted HUD glass on
+earlier releases; both are click-through and disappear with **Show Layer Name**. The pill
+is also a drag handle: dragging it moves the panel, and it takes precedence over the top
+resize edge it sits on. Resizing still works either side of the pill.
 
 The grip disappears in click-through mode. Minimum panel size is 420×150. Keycaps fit the
 window without changing their aspect ratio; secondary legends disappear at small sizes.

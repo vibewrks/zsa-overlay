@@ -29,37 +29,63 @@ public final class KeyboardView: NSView {
     public var keymap: Keymap? {
         didSet {
             needsDisplay = true
+            needsLayout = true
             invalidateIntrinsicContentSize()
         }
     }
 
     public var activeLayerIndex: Int = 0 {
-        didSet { if oldValue != activeLayerIndex { needsDisplay = true } }
+        didSet {
+            if oldValue != activeLayerIndex {
+                needsDisplay = true
+            }
+        }
     }
 
     /// Physical Oryx key IDs held down, independent of their current-layer binding.
     public var pressedKeyIDs: Set<Int> = [] {
-        didSet { if oldValue != pressedKeyIDs { needsDisplay = true } }
+        didSet {
+            if oldValue != pressedKeyIDs {
+                needsDisplay = true
+            }
+        }
     }
+
     /// Which tint `drawKey` uses: per-binding LED colours or the system accent.
     public var highlightStyle: KeyHighlightStyle = .ledColor {
-        didSet { if oldValue != highlightStyle { needsDisplay = true } }
+        didSet {
+            if oldValue != highlightStyle {
+                needsDisplay = true
+            }
+        }
     }
 
     /// Centered label above the board, e.g. "[1] qwerty".
     public var layerName: String? {
-        didSet { if oldValue != layerName { needsDisplay = true } }
+        didSet {
+            guard oldValue != layerName else { return }
+            needsDisplay = true
+            needsLayout = true
+        }
     }
 
     /// Whether `layerName` is drawn. Turning it off reclaims the top strip for keys.
     public var showsLayerName = true {
-        didSet { if oldValue != showsLayerName { needsDisplay = true } }
+        didSet {
+            guard oldValue != showsLayerName else { return }
+            needsDisplay = true
+            needsLayout = true
+        }
     }
 
     /// Why the overlay is not live. Takes the top strip when present, so warnings
     /// remain visible even with the layer name turned off.
     public var indicator: String? {
-        didSet { if oldValue != indicator { needsDisplay = true } }
+        didSet {
+            guard oldValue != indicator else { return }
+            needsDisplay = true
+            needsLayout = true
+        }
     }
 
     /// Whether the drag-to-resize affordance is offered. Hidden in click-through
@@ -75,18 +101,176 @@ public final class KeyboardView: NSView {
     /// Called when a manual resize finishes, so the frame can be persisted.
     public var onFrameChange: (() -> Void)?
 
-    public override var isFlipped: Bool { true }
-    public override var isOpaque: Bool { false }
+    private let topLineGlass = PassThroughVisualEffectView(frame: .zero)
+    private let topLineTint = PassThroughView()
+    private let modernGlassContent = PassThroughView()
+    private var topLineModernGlass: NSView?
+    private let topLineLabel = PassThroughTextField(labelWithString: "")
+    /// Current pill frame in view coordinates, or nil when the strip is hidden.
+    /// Resize handling defers to the window here so the pill drags the overlay.
+    private var topLinePillFrame: NSRect?
+    private var topLineText: String? {
+        guard keymap != nil else { return nil }
+        if let indicator, !indicator.isEmpty {
+            return indicator
+        }
+        if showsLayerName, let layerName, !layerName.isEmpty {
+            return layerName
+        }
+        return nil
+    }
 
-    private static let padding: CGFloat = 12
-    private static let topStrip: CGFloat = 18
+    private var topLineFont: NSFont {
+        let weight: NSFont.Weight = indicator?.isEmpty == false ? .semibold : .bold
+        return Self.font(size: 11, weight: weight, rounded: true)
+    }
+
+    override public var isFlipped: Bool {
+        true
+    }
+
+    override public var isOpaque: Bool {
+        false
+    }
+
+    override public init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        configureTopLineGlass()
+    }
+
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureTopLineGlass()
+    }
+
+    private func configureTopLineGlass() {
+        topLineLabel.alignment = .center
+        topLineLabel.drawsBackground = false
+        topLineLabel.isBordered = false
+        topLineLabel.isEditable = false
+        topLineLabel.isSelectable = false
+        topLineLabel.lineBreakMode = .byTruncatingTail
+        topLineLabel.cell?.usesSingleLineMode = true
+        topLineLabel.isHidden = true
+
+        if #available(macOS 26.0, *) {
+            topLineLabel.textColor = .labelColor
+            let glass = PassThroughGlassEffectView(frame: .zero)
+            glass.style = .clear
+            glass.cornerRadius = Self.topStrip / 2
+            glass.contentView = modernGlassContent
+            glass.isHidden = true
+            addSubview(glass)
+            topLineModernGlass = glass
+
+            topLineLabel.translatesAutoresizingMaskIntoConstraints = false
+            modernGlassContent.addSubview(topLineLabel)
+            NSLayoutConstraint.activate([
+                topLineLabel.centerXAnchor.constraint(equalTo: modernGlassContent.centerXAnchor),
+                topLineLabel.centerYAnchor.constraint(equalTo: modernGlassContent.centerYAnchor),
+            ])
+        } else {
+            configureLegacyTopLineGlass()
+        }
+    }
+
+    /// Frosted HUD glass for macOS versions that predate `NSGlassEffectView`.
+    private func configureLegacyTopLineGlass() {
+        topLineLabel.textColor = .white
+        topLineGlass.material = .hudWindow
+        topLineGlass.blendingMode = .behindWindow
+        topLineGlass.state = .active
+        topLineGlass.appearance = NSAppearance(named: .darkAqua)
+        topLineGlass.wantsLayer = true
+        topLineGlass.layer?.cornerRadius = Self.topStrip / 2
+        topLineGlass.layer?.cornerCurve = .continuous
+        topLineGlass.layer?.masksToBounds = true
+        topLineGlass.layer?.borderWidth = 0.5
+        topLineGlass.layer?.borderColor = NSColor.white.withAlphaComponent(0.16).cgColor
+        topLineGlass.isHidden = true
+        addSubview(topLineGlass)
+
+        topLineTint.wantsLayer = true
+        topLineTint.layer?.backgroundColor = NSColor.black.withAlphaComponent(0.55).cgColor
+        topLineTint.layer?.cornerRadius = Self.topStrip / 2
+        topLineTint.layer?.cornerCurve = .continuous
+        topLineTint.layer?.masksToBounds = true
+        topLineGlass.addSubview(topLineTint)
+
+        addSubview(topLineLabel)
+    }
+
+    override public func layout() {
+        super.layout()
+        layoutTopLineGlass()
+    }
+
+    private func layoutTopLineGlass() {
+        guard let text = topLineText else {
+            topLineModernGlass?.isHidden = true
+            topLineGlass.isHidden = true
+            topLineLabel.isHidden = true
+            updateTopLinePillFrame(nil)
+            return
+        }
+        let font = topLineFont
+        topLineLabel.font = font
+        topLineLabel.stringValue = text
+
+        let textSize = (text as NSString).size(withAttributes: [.font: font])
+        let maxWidth = max(0, bounds.width - Self.padding * 2)
+        let inset = topLineModernGlass == nil ? Self.topLineInset : Self.modernTopLineInset
+        let width = min(maxWidth, ceil(textSize.width) + inset * 2)
+        let pill = NSRect(
+            x: floor((bounds.width - width) / 2),
+            y: Self.topMargin,
+            width: width,
+            height: Self.topStrip
+        )
+        updateTopLinePillFrame(pill)
+
+        if let glass = topLineModernGlass {
+            glass.frame = pill
+            // `NSGlassEffectView` owns its content view's geometry only loosely.
+            // Sizing it here keeps the label's centring constraints correct
+            // regardless of what the system does with the content view.
+            modernGlassContent.frame = glass.bounds
+            glass.isHidden = false
+            topLineLabel.isHidden = false
+        } else {
+            topLineGlass.frame = pill
+            topLineTint.frame = topLineGlass.bounds
+            topLineGlass.isHidden = false
+            topLineLabel.frame = NSRect(
+                x: pill.minX,
+                y: pill.minY + (pill.height - textSize.height) / 2,
+                width: pill.width,
+                height: textSize.height
+            )
+            topLineLabel.isHidden = false
+        }
+    }
+
+    /// Records the pill frame and refreshes cursor rects when it changes, so
+    /// the drag handle never shows a resize cursor.
+    private func updateTopLinePillFrame(_ frame: NSRect?) {
+        guard topLinePillFrame != frame else { return }
+        topLinePillFrame = frame
+        window?.invalidateCursorRects(for: self)
+    }
+
+    private static let padding: CGFloat = 4
+    private static let topStrip: CGFloat = 17
+    // HIG base unit: 8pt minimum clearance from the window edge so the pill
+    // never sits on the frame. Board sides stay tight at 4pt.
+    private static let topMargin: CGFloat = 8
+    private static let topLineInset: CGFloat = 7
+    private static let modernTopLineInset: CGFloat = 10
 
     /// The strip is only reserved when it has text, so hiding the layer name
     /// gives the board the full height.
     private var topInset: CGFloat {
-        if let indicator, !indicator.isEmpty { return Self.topStrip }
-        if showsLayerName, let layerName, !layerName.isEmpty { return Self.topStrip }
-        return 0
+        topLineText == nil ? 0 : Self.topMargin + Self.topStrip
     }
 
     /// Width divided by height of the board in key units — used to size the window.
@@ -97,10 +281,9 @@ public final class KeyboardView: NSView {
         return box.width / box.height
     }
 
-    public override func draw(_ dirtyRect: NSRect) {
+    override public func draw(_: NSRect) {
         guard let keymap, !keymap.keys.isEmpty else { return }
 
-        drawTopLine()
         let inset = topInset
 
         let box = Self.boundingBox(of: keymap.keys)
@@ -129,8 +312,10 @@ public final class KeyboardView: NSView {
                 height: key.height * scale
             ).insetBy(dx: 1.5, dy: 1.5)
             guard frame.width > 2, frame.height > 2 else { continue }
-            drawKey(keymap.resolvedBinding(at: key.id, activeLayers: activeLayers),
-                    in: frame, pressed: pressedKeyIDs.contains(key.id))
+            drawKey(
+                keymap.resolvedBinding(at: key.id, activeLayers: activeLayers),
+                in: frame, pressed: pressedKeyIDs.contains(key.id)
+            )
         }
         drawResizeGrip()
     }
@@ -145,18 +330,19 @@ public final class KeyboardView: NSView {
 
     /// A borderless window gets no resize affordance from AppKit, so the edges
     /// are ranged here: the outer 10 pt of any side (and therefore the corners)
-    /// drags that side.
+    /// drags that side. The pill is a drag handle, not a resize edge, so hits
+    /// there defer to the window, which drags itself by its background.
     private func activeEdges(at point: NSPoint) -> OverlayResize.Edges {
         guard showsResizeGrip else { return [] }
-        var edges: OverlayResize.Edges = []
-        if point.x <= Self.grabInset { edges.insert(.leading) }
-        if point.x >= bounds.width - Self.grabInset { edges.insert(.trailing) }
-        if point.y <= Self.grabInset { edges.insert(.top) }
-        if point.y >= bounds.height - Self.grabInset { edges.insert(.bottom) }
-        return edges
+        return OverlayResize.edges(
+            at: point,
+            size: bounds.size,
+            grabInset: Self.grabInset,
+            excluding: topLinePillFrame.map { [$0] } ?? []
+        )
     }
 
-    public override func resetCursorRects() {
+    override public func resetCursorRects() {
         guard showsResizeGrip else { return }
         let inset = Self.grabInset
         addCursorRect(
@@ -167,17 +353,28 @@ public final class KeyboardView: NSView {
             NSRect(x: bounds.width - inset, y: 0, width: inset, height: bounds.height),
             cursor: .resizeLeftRight
         )
-        addCursorRect(
-            NSRect(x: 0, y: 0, width: bounds.width, height: inset),
-            cursor: .resizeUpDown
-        )
+        for segment in topEdgeSegments(inset: inset) {
+            addCursorRect(segment, cursor: .resizeUpDown)
+        }
         addCursorRect(
             NSRect(x: 0, y: bounds.height - inset, width: bounds.width, height: inset),
             cursor: .resizeUpDown
         )
     }
 
-    public override func mouseDown(with event: NSEvent) {
+    /// The top resize strip, split around the pill so hovering the drag handle
+    /// offers no resize cursor.
+    private func topEdgeSegments(inset: CGFloat) -> [NSRect] {
+        let (left, remainder) = NSRect(x: 0, y: 0, width: bounds.width, height: inset)
+            .divided(atDistance: topLinePillFrame?.minX ?? 0, from: .minXEdge)
+        let (_, right) = remainder.divided(
+            atDistance: topLinePillFrame?.width ?? 0,
+            from: .minXEdge
+        )
+        return [left, right].filter { $0.width > 0 }
+    }
+
+    override public func mouseDown(with event: NSEvent) {
         let point = convert(event.locationInWindow, from: nil)
         let edges = activeEdges(at: point)
         guard !edges.isEmpty, let window else {
@@ -190,7 +387,7 @@ public final class KeyboardView: NSView {
         initialMouse = NSEvent.mouseLocation
     }
 
-    public override func mouseDragged(with event: NSEvent) {
+    override public func mouseDragged(with event: NSEvent) {
         guard !resizeEdges.isEmpty, let window else {
             super.mouseDragged(with: event)
             return
@@ -206,7 +403,7 @@ public final class KeyboardView: NSView {
         window.setFrame(frame, display: true)
     }
 
-    public override func mouseUp(with event: NSEvent) {
+    override public func mouseUp(with event: NSEvent) {
         guard !resizeEdges.isEmpty else {
             super.mouseUp(with: event)
             return
@@ -247,7 +444,8 @@ public final class KeyboardView: NSView {
         // for it. Disabled/transparent keys carry no colour by construction.
         let led: NSColor? = {
             guard highlightStyle == .ledColor, kind == .mapped,
-                  let hex = binding?.color, let color = NSColor(ledHex: hex) else { return nil }
+                  let hex = binding?.color, let color = NSColor(ledHex: hex)
+            else { return nil }
             return color
         }()
 
@@ -290,9 +488,10 @@ public final class KeyboardView: NSView {
         guard rect.height >= 16 else { return }
 
         let primarySize = min(max(rect.height * 0.34, 7), 13)
-        let borderColor: NSColor = kind == .mapped || pressed
-            ? NSColor.white.withAlphaComponent(0.92)
-            : NSColor.white.withAlphaComponent(0.28)
+        let borderColor: NSColor =
+            kind == .mapped || pressed
+                ? NSColor.white.withAlphaComponent(0.92)
+                : NSColor.white.withAlphaComponent(0.28)
 
         if kind == .transparent {
             drawText("↧", in: rect.insetBy(dx: 2, dy: 2), size: primarySize, color: borderColor)
@@ -310,9 +509,10 @@ public final class KeyboardView: NSView {
         let hasSecondary = showsBands && !secondary.isEmpty
         let hasExtra = showsBands && !binding.extra.isEmpty
         let bandHeight = smallSize + 4
-        let secondaryColor = kind == .mapped
-            ? NSColor.white.withAlphaComponent(0.62)
-            : NSColor.white.withAlphaComponent(0.22)
+        let secondaryColor =
+            kind == .mapped
+                ? NSColor.white.withAlphaComponent(0.62)
+                : NSColor.white.withAlphaComponent(0.22)
 
         var primaryRect = rect.insetBy(dx: 2, dy: 1)
 
@@ -330,7 +530,9 @@ public final class KeyboardView: NSView {
         if hasExtra {
             drawText(
                 binding.extra,
-                in: NSRect(x: rect.minX + 3, y: rect.maxY - bandHeight - 2, width: rect.width - 6, height: bandHeight),
+                in: NSRect(
+                    x: rect.minX + 3, y: rect.maxY - bandHeight - 2, width: rect.width - 6, height: bandHeight
+                ),
                 size: smallSize,
                 color: secondaryColor,
                 alignment: .right
@@ -341,74 +543,31 @@ public final class KeyboardView: NSView {
         drawText(primary, in: primaryRect, size: primarySize, color: borderColor)
     }
 
-    private func drawTopLine() {
-        let rect = NSRect(
-            x: Self.padding,
-            y: 1,
-            width: bounds.width - Self.padding * 2,
-            height: Self.topStrip - 2
-        )
-        if let indicator, !indicator.isEmpty {
-            drawText(
-                indicator,
-                in: rect,
-                size: 11,
-                color: NSColor.white.withAlphaComponent(0.92),
-                alignment: .center,
-                weight: .semibold,
-                rounded: true,
-                shadow: true
-            )
-        } else if showsLayerName, let layerName, !layerName.isEmpty {
-            drawText(
-                layerName,
-                in: rect,
-                size: 11,
-                color: NSColor.white.withAlphaComponent(0.92),
-                alignment: .center,
-                weight: .bold,
-                rounded: true,
-                shadow: true
-            )
-        }
-    }
-
     private func drawText(
         _ string: String,
         in rect: NSRect,
         size: CGFloat,
         color: NSColor,
-        alignment: NSTextAlignment = .center,
-        weight: NSFont.Weight = .medium,
-        rounded: Bool = false,
-        shadow: Bool = false
+        alignment: NSTextAlignment = .center
     ) {
         guard !string.isEmpty, size >= 6, rect.width > 4 else { return }
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = alignment
         paragraph.lineBreakMode = .byTruncatingTail
+        (string as NSString).draw(
+            in: rect,
+            withAttributes: [
+                .font: NSFont.systemFont(ofSize: size, weight: .medium),
+                .foregroundColor: color,
+                .paragraphStyle: paragraph,
+            ]
+        )
+    }
 
-        let baseFont = NSFont.systemFont(ofSize: size, weight: weight)
-        let font: NSFont
-        if rounded, let descriptor = baseFont.fontDescriptor.withDesign(.rounded) {
-            font = NSFont(descriptor: descriptor, size: size) ?? baseFont
-        } else {
-            font = baseFont
-        }
-
-        var attributes: [NSAttributedString.Key: Any] = [
-            .font: font,
-            .foregroundColor: color,
-            .paragraphStyle: paragraph,
-        ]
-        if shadow {
-            let textShadow = NSShadow()
-            textShadow.shadowColor = NSColor.black.withAlphaComponent(0.85)
-            textShadow.shadowBlurRadius = 2
-            textShadow.shadowOffset = .zero
-            attributes[.shadow] = textShadow
-        }
-        (string as NSString).draw(in: rect, withAttributes: attributes)
+    private static func font(size: CGFloat, weight: NSFont.Weight, rounded: Bool) -> NSFont {
+        let base = NSFont.systemFont(ofSize: size, weight: weight)
+        guard rounded, let descriptor = base.fontDescriptor.withDesign(.rounded) else { return base }
+        return NSFont(descriptor: descriptor, size: size) ?? base
     }
 
     // MARK: - Geometry
@@ -426,5 +585,35 @@ public final class KeyboardView: NSView {
         }
         guard minX <= maxX, minY <= maxY else { return .zero }
         return NSRect(x: minX, y: minY, width: maxX - minX, height: maxY - minY)
+    }
+}
+
+/// Decorative glass that lets clicks fall through to the overlay beneath it.
+private final class PassThroughVisualEffectView: NSVisualEffectView {
+    override func hitTest(_: NSPoint) -> NSView? {
+        nil
+    }
+}
+
+/// Plain container that defers every click to the overlay window. Used so the
+/// pill's contents never depend on an ancestor's hit test to stay click-through.
+private final class PassThroughView: NSView {
+    override func hitTest(_: NSPoint) -> NSView? {
+        nil
+    }
+}
+
+/// Label that never steals clicks from the overlay window.
+private final class PassThroughTextField: NSTextField {
+    override func hitTest(_: NSPoint) -> NSView? {
+        nil
+    }
+}
+
+/// Liquid Glass pill for macOS 26+, also click-through.
+@available(macOS 26.0, *)
+private final class PassThroughGlassEffectView: NSGlassEffectView {
+    override func hitTest(_: NSPoint) -> NSView? {
+        nil
     }
 }
