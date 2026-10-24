@@ -34,7 +34,10 @@ struct LedHexTests {
     }
 
     @Test func trimsSurroundingWhitespace() throws {
-        #expect(try requireColor("  #0075FF  ") != nil)
+        let (r, g, b) = components(try requireColor("  #0075FF  "))
+        #expect(abs(r - 0.0) < 0.005)
+        #expect(abs(g - 117 / 255) < 0.005)
+        #expect(abs(b - 1.0) < 0.005)
     }
 
     @Test func rejectsMalformedHex() {
