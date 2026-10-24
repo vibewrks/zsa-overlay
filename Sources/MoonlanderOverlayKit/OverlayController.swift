@@ -17,6 +17,7 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     public private(set) var opacity: CGFloat = 1
     /// Zero would make the overlay vanish, so the menu slider stops at ten percent.
     public static let opacityRange: ClosedRange<CGFloat> = 0.1...1.0
+    public private(set) var showsLayerName = true
     public var currentLayerIndex: Int { displayLayerIndex }
     public private(set) var highlightStyle: KeyHighlightStyle = .ledColor
     public var keymapTitle: String { keymap.map { "\($0.title) · \($0.revision)" } ?? "no layout loaded" }
@@ -80,6 +81,7 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     private static let followsKeyboardKey = "FollowsKeyboard"
     private static let highlightStyleKey = "KeyHighlightStyle"
     private static let opacityKey = "OverlayOpacity"
+    private static let showsLayerNameKey = "ShowsLayerName"
 
     public override init() {
         panel = OverlayPanel(
@@ -99,6 +101,8 @@ public final class OverlayController: NSObject, NSWindowDelegate {
         let savedOpacity = defaults.object(forKey: Self.opacityKey) as? Double ?? 1
         opacity = Self.clampedOpacity(CGFloat(savedOpacity))
         panel.alphaValue = opacity
+        showsLayerName = defaults.object(forKey: Self.showsLayerNameKey) as? Bool ?? true
+        view.showsLayerName = showsLayerName
         refreshFlashedIdentity()
         loadKeymap()
         applyState()
@@ -188,6 +192,13 @@ public final class OverlayController: NSObject, NSWindowDelegate {
 
     private static func clampedOpacity(_ value: CGFloat) -> CGFloat {
         min(max(value, opacityRange.lowerBound), opacityRange.upperBound)
+    }
+
+    public func setShowsLayerName(_ shows: Bool) {
+        showsLayerName = shows
+        UserDefaults.standard.set(shows, forKey: Self.showsLayerNameKey)
+        view.showsLayerName = shows
+        applyState()
     }
 
     public func selectLayer(_ index: Int) {
@@ -280,33 +291,36 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     }
 
     private func applyState(notifyMenu: Bool = true) {
-        if let loadFailure {
-            view.indicator = loadFailure
-        } else if let revisionWarning {
-            view.indicator = revisionWarning
-        } else if followingKeyboard {
-            switch availability {
-            case .live(let message) where message.state == .connected && message.layer != nil:
-                view.indicator = "layer \(displayLayerIndex) · \(title(forLayer: displayLayerIndex) ?? "?")"
-            case .live(let message) where message.state == .disconnected:
-                view.indicator = "⚠️ No Moonlander connected · showing layer \(manualLayer) (not live)"
-            case .live(let message) where message.state == .busy:
-                view.indicator = "⚠️ Keyboard in use — disconnect/quit Keymapp · not live"
-            case .live(let message):
-                view.indicator = "⚠️ \(message.message) · not live"
-            case .stale:
-                view.indicator = "⚠️ No keyboard state · showing layer \(manualLayer) (not live)"
-            case .starting:
-                view.indicator = "connecting directly to Moonlander…"
-            case .stopped:
-                view.indicator = "not following keyboard — layer \(manualLayer) · \(title(forLayer: manualLayer) ?? "?")"
-            }
-        } else {
-            view.indicator = "layer \(manualLayer) · \(title(forLayer: manualLayer) ?? "?") · manual"
-        }
+        let layerName = "[\(displayLayerIndex)] \(title(forLayer: displayLayerIndex) ?? "?")"
+        view.layerName = followingKeyboard ? layerName : "\(layerName) · manual"
+        view.showsLayerName = showsLayerName
+        view.indicator = statusWarning
         view.activeLayerIndex = displayLayerIndex
         view.highlightStyle = highlightStyle
         if notifyMenu { onStateChange?() }
+    }
+
+    /// Warning/error text that takes over the top strip; nil while live.
+    private var statusWarning: String? {
+        if let loadFailure { return loadFailure }
+        if let revisionWarning { return revisionWarning }
+        guard followingKeyboard else { return nil }
+        switch availability {
+        case .live(let message) where message.state == .connected && message.layer != nil:
+            return nil
+        case .live(let message) where message.state == .disconnected:
+            return "⚠️ No Moonlander connected · showing layer \(manualLayer) (not live)"
+        case .live(let message) where message.state == .busy:
+            return "⚠️ Keyboard in use — disconnect/quit Keymapp · not live"
+        case .live(let message):
+            return "⚠️ \(message.message) · not live"
+        case .stale:
+            return "⚠️ No keyboard state · showing layer \(manualLayer) (not live)"
+        case .starting:
+            return "connecting directly to Moonlander…"
+        case .stopped:
+            return "not following keyboard — layer \(manualLayer) · \(title(forLayer: manualLayer) ?? "?")"
+        }
     }
 
     private var displayLayerIndex: Int {

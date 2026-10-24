@@ -129,6 +129,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ledColors.state = controller.highlightStyle == .ledColor ? .on : .off
         menu.addItem(ledColors)
 
+        let layerName = menuItem("Show Layer Name", action: #selector(toggleLayerName))
+        layerName.state = controller.showsLayerName ? .on : .off
+        menu.addItem(layerName)
+
         menu.addItem(opacityMenuItem())
 
         menu.addItem(menuItem("Larger  (drag edges to resize)", action: #selector(growOverlay)))
@@ -210,6 +214,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func togglePinned() { controller.setPinned(!controller.isPinned) }
     @objc private func toggleLedColors() {
         controller.setHighlightStyle(controller.highlightStyle == .ledColor ? .systemAccent : .ledColor)
+    }
+
+    @objc private func toggleLayerName() {
+        controller.setShowsLayerName(!controller.showsLayerName)
     }
 
     @objc private func opacityChanged(_ sender: NSSlider) {

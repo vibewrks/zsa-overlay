@@ -46,7 +46,18 @@ public final class KeyboardView: NSView {
         didSet { if oldValue != highlightStyle { needsDisplay = true } }
     }
 
-    /// Small status line under/above the board: layer name, or why it is not live.
+    /// Centered label above the board, e.g. "[1] qwerty".
+    public var layerName: String? {
+        didSet { if oldValue != layerName { needsDisplay = true } }
+    }
+
+    /// Whether `layerName` is drawn. Turning it off reclaims the top strip for keys.
+    public var showsLayerName = true {
+        didSet { if oldValue != showsLayerName { needsDisplay = true } }
+    }
+
+    /// Why the overlay is not live. Takes the top strip when present, so warnings
+    /// remain visible even with the layer name turned off.
     public var indicator: String? {
         didSet { if oldValue != indicator { needsDisplay = true } }
     }
@@ -68,7 +79,15 @@ public final class KeyboardView: NSView {
     public override var isOpaque: Bool { false }
 
     private static let padding: CGFloat = 12
-    private static let indicatorHeight: CGFloat = 18
+    private static let topStrip: CGFloat = 18
+
+    /// The strip is only reserved when it has text, so hiding the layer name
+    /// gives the board the full height.
+    private var topInset: CGFloat {
+        if let indicator, !indicator.isEmpty { return Self.topStrip }
+        if showsLayerName, let layerName, !layerName.isEmpty { return Self.topStrip }
+        return 0
+    }
 
     /// Width divided by height of the board in key units — used to size the window.
     public var contentAspectRatio: CGFloat {
@@ -81,14 +100,15 @@ public final class KeyboardView: NSView {
     public override func draw(_ dirtyRect: NSRect) {
         guard let keymap, !keymap.keys.isEmpty else { return }
 
-        drawIndicator()
+        drawTopLine()
+        let inset = topInset
 
         let box = Self.boundingBox(of: keymap.keys)
         let available = NSRect(
             x: 0,
-            y: Self.indicatorHeight,
+            y: inset,
             width: bounds.width,
-            height: bounds.height - Self.indicatorHeight
+            height: bounds.height - inset
         )
         let usableWidth = available.width - Self.padding * 2
         let usableHeight = available.height - Self.padding * 2
@@ -196,17 +216,24 @@ public final class KeyboardView: NSView {
     }
 
     /// Two ticks in the bottom-right corner, mirroring the classic resize grip.
+    /// A dark halo keeps it legible over light content; the white ticks do the
+    /// same over dark content.
     private func drawResizeGrip() {
         guard showsResizeGrip, bounds.width > 60, bounds.height > 60 else { return }
-        let corner = NSPoint(x: bounds.maxX - 4, y: bounds.maxY - 4)
+        let corner = NSPoint(x: bounds.maxX - 6, y: bounds.maxY - 6)
         let path = NSBezierPath()
-        path.lineWidth = 1.5
         path.lineCapStyle = .round
         path.move(to: NSPoint(x: corner.x - 10, y: corner.y - 4))
         path.line(to: NSPoint(x: corner.x - 4, y: corner.y - 10))
         path.move(to: NSPoint(x: corner.x - 6, y: corner.y - 4))
         path.line(to: NSPoint(x: corner.x - 4, y: corner.y - 6))
-        NSColor.white.withAlphaComponent(0.32).setStroke()
+
+        NSColor.black.withAlphaComponent(0.55).setStroke()
+        path.lineWidth = 3.5
+        path.stroke()
+
+        NSColor.white.withAlphaComponent(0.85).setStroke()
+        path.lineWidth = 1.5
         path.stroke()
     }
 
@@ -314,15 +341,36 @@ public final class KeyboardView: NSView {
         drawText(primary, in: primaryRect, size: primarySize, color: borderColor)
     }
 
-    private func drawIndicator() {
-        guard let text = indicator, !text.isEmpty else { return }
-        drawText(
-            text,
-            in: NSRect(x: Self.padding, y: 2, width: bounds.width - Self.padding * 2, height: Self.indicatorHeight - 4),
-            size: 11,
-            color: NSColor.white.withAlphaComponent(0.55),
-            alignment: .left
+    private func drawTopLine() {
+        let rect = NSRect(
+            x: Self.padding,
+            y: 1,
+            width: bounds.width - Self.padding * 2,
+            height: Self.topStrip - 2
         )
+        if let indicator, !indicator.isEmpty {
+            drawText(
+                indicator,
+                in: rect,
+                size: 11,
+                color: NSColor.white.withAlphaComponent(0.92),
+                alignment: .center,
+                weight: .semibold,
+                rounded: true,
+                shadow: true
+            )
+        } else if showsLayerName, let layerName, !layerName.isEmpty {
+            drawText(
+                layerName,
+                in: rect,
+                size: 11,
+                color: NSColor.white.withAlphaComponent(0.92),
+                alignment: .center,
+                weight: .bold,
+                rounded: true,
+                shadow: true
+            )
+        }
     }
 
     private func drawText(
@@ -330,20 +378,37 @@ public final class KeyboardView: NSView {
         in rect: NSRect,
         size: CGFloat,
         color: NSColor,
-        alignment: NSTextAlignment = .center
+        alignment: NSTextAlignment = .center,
+        weight: NSFont.Weight = .medium,
+        rounded: Bool = false,
+        shadow: Bool = false
     ) {
         guard !string.isEmpty, size >= 6, rect.width > 4 else { return }
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = alignment
         paragraph.lineBreakMode = .byTruncatingTail
-        (string as NSString).draw(
-            in: rect,
-            withAttributes: [
-                .font: NSFont.systemFont(ofSize: size, weight: .medium),
-                .foregroundColor: color,
-                .paragraphStyle: paragraph,
-            ]
-        )
+
+        let baseFont = NSFont.systemFont(ofSize: size, weight: weight)
+        let font: NSFont
+        if rounded, let descriptor = baseFont.fontDescriptor.withDesign(.rounded) {
+            font = NSFont(descriptor: descriptor, size: size) ?? baseFont
+        } else {
+            font = baseFont
+        }
+
+        var attributes: [NSAttributedString.Key: Any] = [
+            .font: font,
+            .foregroundColor: color,
+            .paragraphStyle: paragraph,
+        ]
+        if shadow {
+            let textShadow = NSShadow()
+            textShadow.shadowColor = NSColor.black.withAlphaComponent(0.85)
+            textShadow.shadowBlurRadius = 2
+            textShadow.shadowOffset = .zero
+            attributes[.shadow] = textShadow
+        }
+        (string as NSString).draw(in: rect, withAttributes: attributes)
     }
 
     // MARK: - Geometry

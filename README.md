@@ -69,6 +69,7 @@ name when a second board lands.
 | Follow live layer and highlight held keys | **Follow Keyboard** |
 | Release HID ownership without quitting | **Release Keyboard (Manual Reference)** |
 | Display one reference layer without reading the board | **Layer** submenu; selection is remembered |
+| Show the active layer name above the keys (e.g. `[1] qwerty`) | **Show Layer Name**; remembered |
 | Pass clicks to applications underneath | **Pinned (click-through)** |
 | Tint borders with Oryx LED colours (fill on press) vs system accent | **Use LED Colors**; remembered |
 | Adjust how opaque the overlay is (10–100%) | **Opacity** slider; remembered |
