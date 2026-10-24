@@ -41,7 +41,7 @@ jobs:
         run: swift test
 
       - name: Importer syntax
-        run: python3 -m py_compile scripts/import-keymapp.py
+        run: python3 -m py_compile scripts/import-oryx.py scripts/import-keymapp.py
 
       - name: Rust tests
         run: cargo test --manifest-path Sidecar/Cargo.toml
