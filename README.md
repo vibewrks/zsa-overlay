@@ -70,6 +70,7 @@ name when a second board lands.
 | Release HID ownership without quitting | **Release Keyboard (Manual Reference)** |
 | Display one reference layer without reading the board | **Layer** submenu; selection is remembered |
 | Pass clicks to applications underneath | **Pinned (click-through)** |
+| Tint borders with Oryx LED colours (fill on press) vs system accent | **Use LED Colors**; remembered |
 | Resize | Drag an edge/corner; bottom-right notch shows the affordance, or use **Larger/Smaller** |
 | Reconnect the HID helper | **Retry Keyboard Connection** |
 | Re-read legends and board identity | **Reload Layout** |
@@ -77,7 +78,10 @@ name when a second board lands.
 
 The grip disappears in click-through mode. Minimum panel size is 420×150. Keycaps fit the
 window without changing their aspect ratio; secondary legends disappear at small sizes.
-Disabled bindings are faint outlines. Transparent/inherited bindings show `↧` because the
+With **Use LED Colors**, each mapped key's border takes its Oryx LED colour for the
+active layer and a press fills the key with it; untinted keys and the system-accent
+mode keep the historical treatment. Disabled bindings are faint outlines.
+Transparent/inherited bindings show `↧` because the
 board reports the highest active layer, not the full active-layer stack.
 
 ## Layout IDs are not layout data

@@ -1,5 +1,28 @@
 import AppKit
 
+/// How held and resting keys are tinted. `.ledColor` uses each binding's Oryx
+/// LED colour (`KeyBinding.color`); `.systemAccent` keeps the historical
+/// `controlAccentColor` treatment. Fleshed out later; persisted as a raw string.
+public enum KeyHighlightStyle: String, Sendable, Equatable {
+    case ledColor
+    case systemAccent
+}
+
+public extension NSColor {
+    /// Strict `#RRGGBB` (case-insensitive) to an opaque colour; nil otherwise.
+    convenience init?(ledHex: String) {
+        let hex = ledHex.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard hex.hasPrefix("#"), hex.count == 7 else { return nil }
+        guard let value = UInt64(hex.dropFirst(), radix: 16) else { return nil }
+        self.init(
+            red: CGFloat((value >> 16) & 0xFF) / 255,
+            green: CGFloat((value >> 8) & 0xFF) / 255,
+            blue: CGFloat(value & 0xFF) / 255,
+            alpha: 1
+        )
+    }
+}
+
 /// Draws keycaps only. Nothing fills the window bounds, so the desktop shows through
 /// the gaps between keys and around the board.
 public final class KeyboardView: NSView {
@@ -17,6 +40,10 @@ public final class KeyboardView: NSView {
     /// Physical Oryx key IDs held down, independent of their current-layer binding.
     public var pressedKeyIDs: Set<Int> = [] {
         didSet { if oldValue != pressedKeyIDs { needsDisplay = true } }
+    }
+    /// Which tint `drawKey` uses: per-binding LED colours or the system accent.
+    public var highlightStyle: KeyHighlightStyle = .ledColor {
+        didSet { if oldValue != highlightStyle { needsDisplay = true } }
     }
 
     /// Small status line under/above the board: layer name, or why it is not live.
@@ -189,12 +216,19 @@ public final class KeyboardView: NSView {
         let radius = min(rect.height * 0.22, 6)
         let path = NSBezierPath(roundedRect: rect, xRadius: radius, yRadius: radius)
         let kind = binding?.kind ?? .transparent
+        // LED colour for this binding on the active layer, when the style asks
+        // for it. Disabled/transparent keys carry no colour by construction.
+        let led: NSColor? = {
+            guard highlightStyle == .ledColor, kind == .mapped,
+                  let hex = binding?.color, let color = NSColor(ledHex: hex) else { return nil }
+            return color
+        }()
 
         switch kind {
         case .mapped:
             NSColor.black.withAlphaComponent(0.55).setFill()
             path.fill()
-            NSColor.white.withAlphaComponent(0.30).setStroke()
+            (led ?? NSColor.white.withAlphaComponent(0.30)).setStroke()
             path.lineWidth = 1
             path.stroke()
 
@@ -214,10 +248,14 @@ public final class KeyboardView: NSView {
         }
 
         if pressed {
-            NSColor.controlAccentColor.withAlphaComponent(0.60).setFill()
+            if let led {
+                led.withAlphaComponent(0.85).setFill()
+            } else {
+                NSColor.controlAccentColor.withAlphaComponent(0.60).setFill()
+            }
             path.fill()
             path.setLineDash([], count: 0, phase: 0)
-            NSColor.controlAccentColor.setStroke()
+            (led ?? NSColor.controlAccentColor).setStroke()
             path.lineWidth = 2
             path.stroke()
         }

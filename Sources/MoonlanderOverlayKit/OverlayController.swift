@@ -15,6 +15,7 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     public var isPinned: Bool { panel.ignoresMouseEvents }
     public var isFollowingKeyboard: Bool { followingKeyboard }
     public var currentLayerIndex: Int { displayLayerIndex }
+    public private(set) var highlightStyle: KeyHighlightStyle = .ledColor
     public var keymapTitle: String { keymap.map { "\($0.title) · \($0.revision)" } ?? "no layout loaded" }
     public var layerChoices: [LayerChoice] {
         (keymap?.layers ?? []).map { LayerChoice(index: $0.index, title: $0.title) }
@@ -74,6 +75,7 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     private static let frameDefaultsKey = "OverlayPanelFrame"
     private static let manualLayerKey = "ManualLayerIndex"
     private static let followsKeyboardKey = "FollowsKeyboard"
+    private static let highlightStyleKey = "KeyHighlightStyle"
 
     public override init() {
         panel = OverlayPanel(
@@ -88,6 +90,8 @@ public final class OverlayController: NSObject, NSWindowDelegate {
         let defaults = UserDefaults.standard
         followingKeyboard = defaults.object(forKey: Self.followsKeyboardKey) as? Bool ?? true
         manualLayer = defaults.integer(forKey: Self.manualLayerKey)
+        highlightStyle = KeyHighlightStyle(
+            rawValue: defaults.string(forKey: Self.highlightStyleKey) ?? "") ?? .ledColor
         refreshFlashedIdentity()
         loadKeymap()
         applyState()
@@ -156,6 +160,12 @@ public final class OverlayController: NSObject, NSWindowDelegate {
         followingKeyboard = true
         UserDefaults.standard.set(true, forKey: Self.followsKeyboardKey)
         updateClientLifecycle()
+        applyState()
+    }
+
+    public func setHighlightStyle(_ style: KeyHighlightStyle) {
+        highlightStyle = style
+        UserDefaults.standard.set(style.rawValue, forKey: Self.highlightStyleKey)
         applyState()
     }
 
@@ -274,6 +284,7 @@ public final class OverlayController: NSObject, NSWindowDelegate {
             view.indicator = "layer \(manualLayer) · \(title(forLayer: manualLayer) ?? "?") · manual"
         }
         view.activeLayerIndex = displayLayerIndex
+        view.highlightStyle = highlightStyle
         if notifyMenu { onStateChange?() }
     }
 
