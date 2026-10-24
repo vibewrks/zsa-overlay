@@ -26,6 +26,7 @@ enum MoonlanderOverlayApp {
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private static let instanceNotification = Notification.Name("com.vibewrks.MoonlanderOverlay.toggle")
+    private static let opacityValueTag = 1001
 
     private let controller = OverlayController()
     private var statusItem: NSStatusItem?
@@ -128,6 +129,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ledColors.state = controller.highlightStyle == .ledColor ? .on : .off
         menu.addItem(ledColors)
 
+        menu.addItem(opacityMenuItem())
+
         menu.addItem(menuItem("Larger  (drag edges to resize)", action: #selector(growOverlay)))
         menu.addItem(menuItem("Smaller", action: #selector(shrinkOverlay)))
 
@@ -160,6 +163,46 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return item
     }
 
+    /// A menu item whose content is a live slider. A custom view replaces the
+    /// item's title, so the label and percentage live inside the view.
+    private func opacityMenuItem() -> NSMenuItem {
+        let item = NSMenuItem(title: "Opacity", action: nil, keyEquivalent: "")
+        let container = NSView(frame: NSRect(x: 0, y: 0, width: 270, height: 28))
+
+        let label = NSTextField(labelWithString: "Opacity")
+        label.frame = NSRect(x: 14, y: 6, width: 56, height: 17)
+        label.font = .menuFont(ofSize: 0)
+        container.addSubview(label)
+
+        let slider = NSSlider(
+            value: Double(controller.opacity),
+            minValue: Double(OverlayController.opacityRange.lowerBound),
+            maxValue: Double(OverlayController.opacityRange.upperBound),
+            target: self,
+            action: #selector(opacityChanged(_:))
+        )
+        slider.frame = NSRect(x: 74, y: 3, width: 150, height: 22)
+        slider.isContinuous = true
+        slider.controlSize = .small
+        slider.setAccessibilityLabel("Overlay opacity")
+        container.addSubview(slider)
+
+        let value = NSTextField(labelWithString: Self.percentString(controller.opacity))
+        value.frame = NSRect(x: 228, y: 6, width: 34, height: 17)
+        value.font = .monospacedDigitSystemFont(ofSize: 11, weight: .regular)
+        value.textColor = .secondaryLabelColor
+        value.alignment = .right
+        value.tag = Self.opacityValueTag
+        container.addSubview(value)
+
+        item.view = container
+        return item
+    }
+
+    private static func percentString(_ opacity: CGFloat) -> String {
+        "\(Int((opacity * 100).rounded()))%"
+    }
+
     @objc private func toggleOverlay() { controller.toggle() }
     @objc private func revealLayoutFile() { controller.revealLayoutFile() }
     @objc private func followKeyboard() { controller.followKeyboard() }
@@ -167,6 +210,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func togglePinned() { controller.setPinned(!controller.isPinned) }
     @objc private func toggleLedColors() {
         controller.setHighlightStyle(controller.highlightStyle == .ledColor ? .systemAccent : .ledColor)
+    }
+
+    @objc private func opacityChanged(_ sender: NSSlider) {
+        controller.setOpacity(CGFloat(sender.doubleValue))
+        if let value = sender.superview?.viewWithTag(Self.opacityValueTag) as? NSTextField {
+            value.stringValue = Self.percentString(controller.opacity)
+        }
     }
     @objc private func growOverlay() { controller.grow() }
     @objc private func shrinkOverlay() { controller.shrink() }

@@ -71,6 +71,7 @@ name when a second board lands.
 | Display one reference layer without reading the board | **Layer** submenu; selection is remembered |
 | Pass clicks to applications underneath | **Pinned (click-through)** |
 | Tint borders with Oryx LED colours (fill on press) vs system accent | **Use LED Colors**; remembered |
+| Adjust how opaque the overlay is (10–100%) | **Opacity** slider; remembered |
 | Resize | Drag an edge/corner; bottom-right notch shows the affordance, or use **Larger/Smaller** |
 | Reconnect the HID helper | **Retry Keyboard Connection** |
 | Re-read legends and board identity | **Reload Layout** |

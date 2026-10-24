@@ -14,6 +14,9 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     public var isVisible: Bool { panel.isVisible }
     public var isPinned: Bool { panel.ignoresMouseEvents }
     public var isFollowingKeyboard: Bool { followingKeyboard }
+    public private(set) var opacity: CGFloat = 1
+    /// Zero would make the overlay vanish, so the menu slider stops at ten percent.
+    public static let opacityRange: ClosedRange<CGFloat> = 0.1...1.0
     public var currentLayerIndex: Int { displayLayerIndex }
     public private(set) var highlightStyle: KeyHighlightStyle = .ledColor
     public var keymapTitle: String { keymap.map { "\($0.title) · \($0.revision)" } ?? "no layout loaded" }
@@ -76,6 +79,7 @@ public final class OverlayController: NSObject, NSWindowDelegate {
     private static let manualLayerKey = "ManualLayerIndex"
     private static let followsKeyboardKey = "FollowsKeyboard"
     private static let highlightStyleKey = "KeyHighlightStyle"
+    private static let opacityKey = "OverlayOpacity"
 
     public override init() {
         panel = OverlayPanel(
@@ -92,6 +96,9 @@ public final class OverlayController: NSObject, NSWindowDelegate {
         manualLayer = defaults.integer(forKey: Self.manualLayerKey)
         highlightStyle = KeyHighlightStyle(
             rawValue: defaults.string(forKey: Self.highlightStyleKey) ?? "") ?? .ledColor
+        let savedOpacity = defaults.object(forKey: Self.opacityKey) as? Double ?? 1
+        opacity = Self.clampedOpacity(CGFloat(savedOpacity))
+        panel.alphaValue = opacity
         refreshFlashedIdentity()
         loadKeymap()
         applyState()
@@ -167,6 +174,20 @@ public final class OverlayController: NSObject, NSWindowDelegate {
         highlightStyle = style
         UserDefaults.standard.set(style.rawValue, forKey: Self.highlightStyleKey)
         applyState()
+    }
+
+    /// Applies immediately and persists for the next launch. Deliberately does not
+    /// fire `onStateChange`, so dragging the menu slider does not rebuild the menu.
+    public func setOpacity(_ value: CGFloat) {
+        let clamped = Self.clampedOpacity(value)
+        guard clamped != opacity else { return }
+        opacity = clamped
+        panel.alphaValue = clamped
+        UserDefaults.standard.set(Double(clamped), forKey: Self.opacityKey)
+    }
+
+    private static func clampedOpacity(_ value: CGFloat) -> CGFloat {
+        min(max(value, opacityRange.lowerBound), opacityRange.upperBound)
     }
 
     public func selectLayer(_ index: Int) {
